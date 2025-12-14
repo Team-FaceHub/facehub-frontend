@@ -1,0 +1,3644 @@
+<!DOCTYPE html>
+
+<html lang="pl">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>Facehub — Editorial portfolio &amp; bezpieczny networking dla branży</title>
+<meta content="Facehub to nowoczesne portfolio i networking dla modeli, fotografów, wizażystów, agencji i marek w Polsce. Weryfikacja kont, moderacja i bezpieczeństwo. Teaser: swipe i AI matching." name="description"/>
+<meta content="Facehub — Editorial portfolio &amp; bezpieczny networking" property="og:title"/>
+<meta content="Zweryfikowane konta, moderacja i nowoczesne narzędzia do współprac. Facehub — bez scamów." property="og:description"/>
+<meta content="#0b0b0c" name="theme-color"/>
+<!-- Vogue/editorial typografia: wysoki kontrast serif + neutralny sans -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,600&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<style>
+    /* =========================================================
+       FACEHUB LP — "VOGUE EDITORIAL" MASTER (scoped under .fh)
+       ========================================================= */
+
+    .fh {
+      /* --- Color system: ink / ivory + subtle mint accent --- */
+      --fh-bg: #0b0b0c;
+      --fh-ink: rgba(255,255,255,0.92);
+      --fh-muted: rgba(255,255,255,0.70);
+      --fh-dim: rgba(255,255,255,0.54);
+
+      --fh-paper: rgba(255,255,255,0.04);
+      --fh-paper-2: rgba(255,255,255,0.06);
+
+      --fh-hairline: rgba(255,255,255,0.10);
+      --fh-hairline-2: rgba(255,255,255,0.16);
+
+      --fh-accent: #b8ffd0; /* mint */
+      --fh-accent-2: #d9c7ff; /* lavender */
+      --fh-trust: #4da3ff;
+
+      --fh-danger: #ff4d4d;
+
+      --fh-text-sec: #8f8f8f;
+
+      /* --- Typography --- */
+      --fh-serif: "Playfair Display", ui-serif, "Didot", "Bodoni 72", "Times New Roman", serif;
+      --fh-sans: "Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+
+      /* --- Layout --- */
+      --fh-max: 1200px;
+      --fh-pad: 24px;
+      --fh-r-sm: 12px;
+      --fh-r: 18px;
+      --fh-r-lg: 26px;
+
+      /* --- Motion --- */
+      --fh-ease: cubic-bezier(0.22, 1, 0.36, 1);
+      --fh-ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
+
+      /* --- Shadows / glass --- */
+      --fh-shadow: 0 30px 80px rgba(0,0,0,0.55);
+      --fh-shadow-soft: 0 18px 50px rgba(0,0,0,0.42);
+      --fh-glass: rgba(12,12,13,0.62);
+      --fh-blur: blur(18px);
+
+      color: var(--fh-ink);
+      background: var(--fh-bg);
+      font-family: var(--fh-sans);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: geometricPrecision;
+      overflow-x: clip;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* Subtelne editorial światło + tekstura (bez ciężkich bitmap) */
+    .fh::before {
+      content: "";
+      position: fixed;
+      inset: -20vh -20vw;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(900px 520px at 12% 8%, rgba(217,199,255,0.14), transparent 62%),
+        radial-gradient(820px 520px at 88% 16%, rgba(184,255,208,0.12), transparent 64%),
+        radial-gradient(1000px 700px at 50% 0%, rgba(255,255,255,0.08), transparent 60%),
+        repeating-linear-gradient(45deg, rgba(255,255,255,0.028) 0px, rgba(255,255,255,0.028) 1px, transparent 1px, transparent 10px);
+      opacity: 0.55;
+      filter: saturate(1.05);
+      transform: translateZ(0);
+    }
+
+    .fh * { box-sizing: border-box; }
+    .fh a { color: inherit; text-decoration: none; }
+    .fh button, .fh input { font-family: inherit; }
+    .fh img { max-width: 100%; display: block; }
+
+    /* Accessible focus */
+    .fh a:focus-visible,
+    .fh button:focus-visible,
+    .fh input:focus-visible {
+      outline: 2px solid var(--fh-accent);
+      outline-offset: 3px;
+      border-radius: 12px;
+    }
+
+    .fh-wrap {
+      max-width: var(--fh-max);
+      margin: 0 auto;
+      padding: 0 var(--fh-pad);
+      position: relative;
+      z-index: 1;
+    }
+
+    .fh-section {
+      padding: clamp(36px, 4.5vw, 64px) 0;
+      border-top: 1px solid rgba(255,255,255,0.00);
+      position: relative;
+    }
+
+    .fh-grid { display: grid; gap: 18px; }
+    .fh-split { display: grid; gap: 26px; grid-template-columns: 1fr; align-items: start; }
+
+    @media (min-width: 920px) {
+      .fh-split { grid-template-columns: 1fr 1fr; align-items: center; gap: 42px; }
+    }
+
+    /* =========================================================
+       HEADER (minimal, editorial)
+       ========================================================= */
+    .fh-topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(11,11,12,0.68);
+      backdrop-filter: var(--fh-blur);
+      -webkit-backdrop-filter: var(--fh-blur);
+      border-bottom: 1px solid var(--fh-hairline);
+    }
+
+    .fh-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0;
+      gap: 14px;
+    }
+
+    .fh-brand {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 10px;
+      letter-spacing: -0.2px;
+    }
+
+    .fh-brandMark {
+      width: 14px;
+      height: 14px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--fh-accent), var(--fh-accent-2));
+      box-shadow: 0 0 0 6px rgba(184,255,208,0.12);
+      transform: translateY(-2px);
+      flex: 0 0 auto;
+    }
+
+    .fh-brandName {
+      font-family: var(--fh-serif);
+      font-weight: 600;
+      font-size: 18px;
+      letter-spacing: -0.3px;
+    }
+
+    .fh-navlinks {
+      display: none;
+      gap: 18px;
+      color: var(--fh-muted);
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .fh-navlinks a {
+      padding: 8px 6px;
+      border-radius: 12px;
+      transition: background 180ms var(--fh-ease), color 180ms var(--fh-ease);
+    }
+    .fh-navlinks a:hover { color: var(--fh-ink); background: rgba(255,255,255,0.04); }
+
+    .fh-navctas {
+      display: inline-flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    @media (min-width: 920px) {
+      .fh-navlinks { display: inline-flex; }
+    }
+
+    /* =========================================================
+       BUTTONS (Vogue-ish: more editorial, less SaaS)
+       ========================================================= */
+    .fh-btn {
+      appearance: none;
+      border: 1px solid var(--fh-hairline-2);
+      background: rgba(255,255,255,0.02);
+      color: var(--fh-ink);
+      border-radius: 999px;
+      padding: 11px 16px;
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: transform 180ms var(--fh-ease), background 180ms var(--fh-ease), border-color 180ms var(--fh-ease);
+      white-space: nowrap;
+    }
+    .fh-btn:hover {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.26);
+      transform: translateY(-1px);
+    }
+
+    .fh-btn--primary {
+      border-color: transparent;
+      background: linear-gradient(135deg, rgba(255,255,255,0.94), rgba(255,255,255,0.84));
+      color: rgba(0,0,0,0.90);
+    }
+    .fh-btn--primary:hover {
+      filter: brightness(1.03);
+      transform: translateY(-1px);
+    }
+
+    .fh-btn--ghost {
+      background: transparent;
+      border-color: rgba(255,255,255,0.12);
+    }
+
+    /* =========================================================
+       HERO — editorial, oddech + działający search + live results
+       ========================================================= */
+    .fh-hero {
+      padding: clamp(78px, 10vw, 132px) 0 clamp(44px, 6vw, 84px);
+      position: relative;
+      overflow: clip;
+    }
+
+    .fh-heroGrid {
+      display: grid;
+      gap: 28px;
+      grid-template-columns: 1fr;
+      align-items: start;
+    }
+
+    @media (min-width: 980px) {
+      .fh-heroGrid { grid-template-columns: 1.05fr 0.95fr; align-items: self-end; gap: 46px; }
+    }
+
+    .fh-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border: 1px solid var(--fh-hairline);
+      background: rgba(255,255,255,0.02);
+      border-radius: 999px;
+      color: var(--fh-muted);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      width: fit-content;
+    }
+    .fh-kickerDot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--fh-accent);
+      box-shadow: 0 0 0 8px rgba(184,255,208,0.10);
+    }
+
+    .fh-h1 {
+      margin: 18px 0 12px;
+      font-family: var(--fh-serif);
+      font-weight: 400;
+      font-size: clamp(42px, 6.2vw, 78px);
+      line-height: 0.98;
+      letter-spacing: -0.02em;
+    }
+
+    .fh-lead {
+      color: var(--fh-muted);
+      font-size: clamp(16px, 1.55vw, 18px);
+      max-width: 62ch;
+      margin: 0 0 22px;
+      font-weight: 300;
+    }
+
+    .fh-heroCtas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .fh-note {
+      margin-top: 14px;
+      color: var(--fh-dim);
+      font-size: 13px;
+      max-width: 70ch;
+    }
+
+    /* Hero panel: glass + hairlines + editorial spacing */
+    .fh-heroPanel {
+      border: 1px solid rgba(255,255,255,0.12);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      border-radius: var(--fh-r-lg);
+      padding: 18px;
+      box-shadow: var(--fh-shadow-soft);
+      position: relative;
+      overflow: hidden;
+      transform: translateZ(0);
+    }
+
+    .fh-heroPanel::before {
+      content: "";
+      position: absolute;
+      inset: -80px;
+      background:
+        radial-gradient(520px 220px at 20% 18%, rgba(184,255,208,0.14), transparent 62%),
+        radial-gradient(520px 240px at 78% 24%, rgba(217,199,255,0.12), transparent 62%),
+        radial-gradient(900px 520px at 50% 100%, rgba(255,255,255,0.06), transparent 70%);
+      opacity: 0.85;
+      pointer-events: none;
+      transform: rotate(1.5deg);
+    }
+
+    .fh-panelInner { position: relative; z-index: 1; display: grid; gap: 12px; }
+
+    .fh-panelTitleRow {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+      padding-bottom: 10px;
+      margin-bottom: 6px;
+    }
+
+    .fh-panelTitle {
+      font-family: var(--fh-serif);
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      font-size: 18px;
+    }
+
+    .fh-panelMeta {
+      color: var(--fh-dim);
+      font-size: 12px;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .fh-searchBar {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    @media (min-width: 980px) {
+      .fh-searchBar { grid-template-columns: 1fr auto; align-items: center; }
+    }
+
+    .fh-input {
+      width: 100%;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(0,0,0,0.28);
+      color: var(--fh-ink);
+      border-radius: 16px;
+      padding: 13px 14px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 180ms var(--fh-ease), box-shadow 180ms var(--fh-ease);
+    }
+
+    .fh-input::placeholder { color: rgba(255,255,255,0.46); }
+
+    .fh-input:focus {
+      border-color: rgba(184,255,208,0.52);
+      box-shadow: 0 0 0 6px rgba(184,255,208,0.08);
+    }
+
+    .fh-chipRow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .fh-chip {
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.03);
+      color: var(--fh-muted);
+      border-radius: 999px;
+      padding: 8px 10px;
+      font-size: 12px;
+      user-select: none;
+      cursor: pointer;
+      transition: background 160ms var(--fh-ease), border-color 160ms var(--fh-ease), color 160ms var(--fh-ease), transform 160ms var(--fh-ease);
+    }
+    .fh-chip:hover { transform: translateY(-1px); border-color: rgba(255,255,255,0.22); }
+    .fh-chip.is-active {
+      background: rgba(255,255,255,0.92);
+      color: rgba(0,0,0,0.88);
+      border-color: transparent;
+    }
+    .fh-chip.is-verified {
+      border-color: rgba(77,163,255,0.30);
+      color: rgba(175,215,255,0.95);
+    }
+    .fh-chip.is-verified.is-active {
+      background: rgba(77,163,255,0.90);
+      color: #fff;
+    }
+
+    .fh-results {
+      display: grid;
+      gap: 10px;
+      max-height: 320px;
+      overflow: auto;
+      padding-right: 4px;
+      border-top: 1px solid rgba(255,255,255,0.10);
+      padding-top: 12px;
+    }
+
+    .fh-results::-webkit-scrollbar { width: 6px; }
+    .fh-results::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.18); border-radius: 6px; }
+
+    .fh-resultCard {
+      display: grid;
+      grid-template-columns: 56px 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 10px;
+      border-radius: 16px;
+      border: 1px solid transparent;
+      background: rgba(255,255,255,0.02);
+      cursor: pointer;
+      transition: transform 160ms var(--fh-ease), background 160ms var(--fh-ease), border-color 160ms var(--fh-ease);
+    }
+
+    .fh-resultCard:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.05);
+    }
+
+    .fh-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: #1a1a1c;
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 16px 36px rgba(0,0,0,0.35);
+    }
+
+    .fh-resMain { display: grid; gap: 2px; }
+    .fh-resName {
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      line-height: 1.2;
+    }
+    .fh-resMeta {
+      color: var(--fh-dim);
+      font-size: 12px;
+    }
+
+    .fh-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(77,163,255,0.26);
+      background: rgba(77,163,255,0.10);
+      color: rgba(220,240,255,0.96);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .fh-badgeDot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--fh-trust);
+      box-shadow: 0 0 0 6px rgba(77,163,255,0.10);
+    }
+
+    .fh-state {
+      padding: 14px 10px;
+      color: var(--fh-dim);
+      font-size: 13px;
+      text-align: center;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.02);
+      border: 1px dashed rgba(255,255,255,0.12);
+    }
+
+    /* =========================================================
+       TYPO + CARDS
+       ========================================================= */
+    .fh-h2 {
+      font-family: var(--fh-serif);
+      font-weight: 600;
+      font-size: clamp(28px, 3.3vw, 40px);
+      letter-spacing: -0.01em;
+      margin: 0 0 10px;
+      line-height: 1.05;
+    }
+
+    .fh-sub {
+      margin: 0 0 22px;
+      color: var(--fh-muted);
+      max-width: 76ch;
+      font-weight: 300;
+    }
+
+    .fh-eyebrow {
+      display: inline-flex;
+      gap: 10px;
+      align-items: center;
+      color: rgba(255,255,255,0.72);
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .fh-rule {
+      height: 1px;
+      background: rgba(255,255,255,0.10);
+      margin: 18px 0 0;
+    }
+
+    .fh-cards3 { display: grid; gap: 14px; grid-template-columns: 1fr; }
+    @media (min-width: 920px) { .fh-cards3 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; } }
+
+    .fh-card {
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.03);
+      border-radius: var(--fh-r-lg);
+      padding: 22px;
+      display: grid;
+      gap: 10px;
+      min-height: 150px;
+      position: relative;
+      overflow: hidden;
+      transform: translateZ(0);
+    }
+
+    .fh-card::before {
+      content: "";
+      position: absolute;
+      inset: -60px;
+      background:
+        radial-gradient(520px 220px at 20% 20%, rgba(255,255,255,0.06), transparent 60%),
+        radial-gradient(480px 240px at 80% 12%, rgba(184,255,208,0.08), transparent 62%);
+      opacity: 0.55;
+      pointer-events: none;
+    }
+
+    .fh-card > * { position: relative; z-index: 1; }
+
+    .fh-cardTitle {
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .fh-cardText {
+      color: var(--fh-muted);
+      margin: 0;
+      font-weight: 300;
+    }
+
+    .fh-list { margin: 0; padding-left: 18px; color: var(--fh-muted); }
+    .fh-list li { margin: 8px 0; }
+
+    /* =========================================================
+       SWIPE demo — with image background
+       ========================================================= */
+    .fh-swipeWrap {
+      border: 1px solid rgba(255,255,255,0.12);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      border-radius: var(--fh-r-lg);
+      padding: 22px;
+      overflow: hidden;
+      box-shadow: var(--fh-shadow-soft);
+      position: relative;
+    }
+
+    .fh-swipeStage {
+      position: relative;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.22);
+      min-height: 320px;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      padding: 14px;
+    }
+
+    .fh-swipeCard {
+      width: min(430px, 100%);
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.04);
+      box-shadow: 0 28px 70px rgba(0,0,0,0.55);
+      overflow: hidden;
+      transform: translateZ(0);
+    }
+
+    .fh-swipeImg {
+      height: 240px;
+      background: #18181b;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    .fh-swipeImg::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.72));
+    }
+
+    .fh-swipeBody {
+      padding: 16px;
+      display: grid;
+      gap: 10px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+    }
+
+    .fh-swipeTop {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .fh-swipeName {
+      font-weight: 750;
+      letter-spacing: -0.01em;
+      line-height: 1.15;
+    }
+    .fh-swipeMeta { color: var(--fh-dim); font-size: 12px; line-height: 1.4; }
+    .fh-swipeActions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 6px; }
+
+    /* =========================================================
+       FAQ — smooth open/close (height animation)
+       ========================================================= */
+    .fh-faq {
+      display: grid;
+      gap: 12px;
+    }
+
+    .fh-faqItem {
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.03);
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    .fh-faqBtn {
+      width: 100%;
+      text-align: left;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 16px;
+      background: transparent;
+      border: 0;
+      color: var(--fh-ink);
+      cursor: pointer;
+    }
+
+    .fh-faqQ {
+      font-weight: 650;
+      letter-spacing: -0.01em;
+      line-height: 1.25;
+    }
+
+    .fh-faqIcon {
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      transition: transform 220ms var(--fh-ease), background 220ms var(--fh-ease), border-color 220ms var(--fh-ease);
+      color: rgba(255,255,255,0.85);
+    }
+
+    .fh-faqPanel {
+      height: 0;
+      overflow: hidden;
+      transition: height 320ms var(--fh-ease-soft);
+    }
+
+    .fh-faqInner {
+      padding: 0 16px 16px;
+      color: var(--fh-muted);
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    .fh-faqItem.is-open .fh-faqIcon {
+      transform: rotate(45deg);
+      background: rgba(184,255,208,0.10);
+      border-color: rgba(184,255,208,0.28);
+    }
+
+    /* =========================================================
+       FOOTER
+       ========================================================= */
+    .fh-footer {
+      border-top: 1px solid rgba(255,255,255,0.10);
+      padding: 34px 0;
+      color: var(--fh-dim);
+      font-size: 13px;
+    }
+
+    .fh-footGrid {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: 1fr;
+      align-items: start;
+    }
+
+    .fh-footLinks {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .fh-footLinks a { color: var(--fh-dim); padding: 6px 4px; border-radius: 10px; }
+    .fh-footLinks a:hover { color: var(--fh-ink); background: rgba(255,255,255,0.04); }
+
+    @media (min-width: 920px) {
+      .fh-footGrid { grid-template-columns: 1fr auto; align-items: center; }
+    }
+
+    /* =========================================================
+       MODAL — profile preview (live, click from search results)
+       ========================================================= */
+    .fh-modalOverlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(0,0,0,0.70);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      display: grid;
+      place-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 220ms var(--fh-ease);
+      padding: 18px;
+    }
+
+    .fh-modalOverlay.is-open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .fh-modal {
+      width: min(980px, 100%);
+      max-height: min(86vh, 880px);
+      background: rgba(12,12,13,0.78);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 26px;
+      box-shadow: 0 60px 140px rgba(0,0,0,0.60);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr;
+      transform: translateY(10px) scale(0.98);
+      transition: transform 260ms var(--fh-ease);
+    }
+
+    .fh-modalOverlay.is-open .fh-modal { transform: translateY(0) scale(1); }
+
+    @media (min-width: 920px) {
+      .fh-modal { grid-template-columns: 0.42fr 0.58fr; }
+    }
+
+    .fh-modalLeft {
+      padding: 18px;
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+      position: relative;
+    }
+
+    @media (min-width: 920px) {
+      .fh-modalLeft { border-bottom: 0; border-right: 1px solid rgba(255,255,255,0.10); }
+    }
+
+    .fh-modalHero {
+      border-radius: 18px;
+      overflow: hidden;
+      height: 320px;
+      background: #1a1a1c;
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 26px 70px rgba(0,0,0,0.55);
+      position: relative;
+    }
+
+    .fh-modalHero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.78));
+    }
+
+    .fh-modalClose {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(0,0,0,0.30);
+      color: rgba(255,255,255,0.92);
+      cursor: pointer;
+      transition: transform 180ms var(--fh-ease), background 180ms var(--fh-ease);
+      display: grid;
+      place-items: center;
+      z-index: 2;
+    }
+    .fh-modalClose:hover { transform: translateY(-1px); background: rgba(0,0,0,0.46); }
+
+    .fh-modalIdentity {
+      margin-top: 14px;
+      display: grid;
+      gap: 6px;
+    }
+
+    .fh-modalName {
+      font-family: var(--fh-serif);
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      font-size: 26px;
+      line-height: 1.05;
+      margin: 0;
+    }
+
+    .fh-modalRole {
+      color: var(--fh-muted);
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    .fh-modalBadges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .fh-pill {
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.03);
+      color: rgba(255,255,255,0.82);
+      border-radius: 999px;
+      padding: 7px 10px;
+      font-size: 11px;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+    }
+    .fh-pill.is-verified {
+      border-color: rgba(77,163,255,0.26);
+      background: rgba(77,163,255,0.10);
+      color: rgba(220,240,255,0.96);
+    }
+
+    .fh-modalActions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .fh-modalRight {
+      padding: 18px;
+      overflow: auto;
+    }
+
+    .fh-modalRight::-webkit-scrollbar { width: 8px; }
+    .fh-modalRight::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.16); border-radius: 8px; }
+
+    .fh-modalSectionTitle {
+      color: rgba(255,255,255,0.72);
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin: 4px 0 12px;
+    }
+
+    .fh-gallery {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .fh-galleryItem {
+      aspect-ratio: 1;
+      border-radius: 14px;
+      background: #1a1a1c;
+      background-size: cover;
+      background-position: center;
+      opacity: 0.92;
+      transition: opacity 160ms var(--fh-ease), transform 160ms var(--fh-ease);
+      cursor: pointer;
+    }
+    .fh-galleryItem:hover { opacity: 1; transform: translateY(-1px); }
+
+    .fh-modalAbout {
+      color: var(--fh-muted);
+      font-weight: 300;
+      line-height: 1.8;
+      margin: 0;
+    }
+
+    /* =========================================================
+       REVEAL (IntersectionObserver)
+       ========================================================= */
+    .fh-reveal {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 600ms var(--fh-ease), transform 600ms var(--fh-ease);
+    }
+    .fh-reveal.is-in { opacity: 1; transform: translateY(0); }
+
+    /* prefers-reduced-motion */
+    @media (prefers-reduced-motion: reduce) {
+      .fh-reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+      .fh * { scroll-behavior: auto !important; }
+      .fh-btn, .fh-chip, .fh-resultCard, .fh-faqPanel, .fh-faqIcon, .fh-modalOverlay, .fh-modal { transition: none !important; }
+    }
+    /* =========================================
+   SWIPE SECTION — FULL CSS (scoped .fh)
+   ========================================= */
+
+/* Wrapper (u Ciebie już istnieje, ale zostawiam kontekst) */
+.fh .fh-swipeWrap {
+  border: 1px solid var(--fh-border);
+  background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+  border-radius: var(--fh-r);
+  padding: 18px;
+  overflow: hidden;
+}
+
+.fh .fh-swipeStage {
+  position: relative;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(0,0,0,0.24);
+  min-height: 340px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  padding: 14px;
+}
+
+/* Hint */
+.fh .fh-swipeHint {
+  position: absolute;
+  top: -225px;
+  left: 238px;
+  z-index: 5;
+  font-size: 12px;
+  color: rgba(255,255,255,0.62);
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(0,0,0,0.18);
+  backdrop-filter: blur(10px);
+  border-radius: 999px;
+  padding: 6px 10px;
+  pointer-events: none;
+}
+
+.fh .fh-swipeDeck {
+  position: relative;
+  width: 100%;
+  min-height: 320px;
+  display: grid;
+  place-items: center;
+}
+
+/* Card base */
+.fh .fh-swipeCard {
+  position: absolute;
+  width: min(440px, 100%);
+  border-radius: 18px;
+
+  /* Klucz: prawie nieprzezroczyste tło => brak „prześwitywania” */
+  background:
+    radial-gradient(700px 220px at 20% 15%, rgba(183,255,207,0.10), transparent 55%),
+    radial-gradient(560px 260px at 70% 30%, rgba(217,199,255,0.09), transparent 58%),
+    rgba(8, 9, 12, 0.92);
+
+  box-shadow: 0 22px 60px rgba(0,0,0,0.35);
+  overflow: hidden;
+  transform: translate3d(0,0,0);
+  will-change: transform, opacity;
+  user-select: none;
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
+
+  /* stemple */
+  --fh-swipe-like: 0;
+  --fh-swipe-nope: 0;
+}
+
+/* Warstwy */
+.fh .fh-swipeCard.is-front { z-index: 2; opacity: 1; }
+.fh .fh-swipeCard.is-back  { z-index: 1; opacity: 0.55; }
+
+/* Back card jako delikatna zapowiedź */
+.fh .fh-swipeCard.is-back {
+  transform: translate3d(0,14px,0) scale(0.975);
+  filter: saturate(0.92) contrast(0.96);
+}
+
+/* Dragging */
+.fh .fh-swipeCard.is-dragging {
+  cursor: grabbing;
+}
+
+/* Image area */
+.fh .fh-swipeImg {
+  height: 210px;
+  background: rgba(0,0,0,0.18);
+  border-bottom: 1px solid rgba(255,255,255,0.10);
+  background-size: cover;
+  background-position: 50% 35%;
+  position: relative;
+}
+
+/* Back img lekkie przyciemnienie */
+.fh .fh-swipeImg--back {
+  filter: brightness(0.86) saturate(0.95);
+}
+
+/* Body overlay => zawsze czytelny tekst */
+.fh .fh-swipeBody {
+  padding: 14px 16px 16px;
+  display: grid;
+  gap: 10px;
+  background: linear-gradient(
+    180deg,
+    rgba(8,9,12,0.20) 0%,
+    rgba(8,9,12,0.78) 28%,
+    rgba(8,9,12,0.92) 100%
+  );
+}
+
+/* Existing pieces (zakładam, że masz już te klasy; zostawiam bez konfliktu) */
+.fh .fh-swipeTop { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+.fh .fh-swipeName { font-weight: 760; letter-spacing: -0.2px; }
+.fh .fh-swipeMeta { color: var(--fh-dim); font-size: 12px; }
+.fh .fh-swipeBlurb { color: rgba(255,255,255,0.68); }
+.fh .fh-swipeActions { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+
+/* Badge (jak u Ciebie) */
+.fh .fh-badgeDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--fh-accent);
+  box-shadow: 0 0 0 6px rgba(183,255,207,0.12);
+  display: inline-block;
+}
+
+/* Stemple POMIŃ / ZAPROŚ */
+.fh .fh-swipeStamp {
+  position: absolute;
+  top: 14px;
+  padding: 8px 12px;
+  border-radius: 14px;
+  letter-spacing: 0.12em;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity 120ms ease;
+  backdrop-filter: blur(10px);
+}
+
+.fh .fh-swipeStamp--no {
+  left: 14px;
+  border: 1px solid rgba(255, 120, 120, 0.35);
+  background: rgba(255, 120, 120, 0.10);
+  color: rgba(255,255,255,0.92);
+  transform: rotate(-8deg);
+}
+
+.fh .fh-swipeStamp--yes {
+  right: 14px;
+  border: 1px solid rgba(183,255,207,0.38);
+  background: rgba(183,255,207,0.12);
+  color: rgba(255,255,255,0.92);
+  transform: rotate(8deg);
+}
+
+/* Stemple reagują tylko na front-card */
+.fh .fh-swipeCard.is-front .fh-swipeStamp--yes { opacity: var(--fh-swipe-like); }
+.fh .fh-swipeCard.is-front .fh-swipeStamp--no  { opacity: var(--fh-swipe-nope); }
+
+/* Focus */
+.fh .fh-swipeCard:focus-visible {
+  outline: 2px solid var(--fh-accent);
+  outline-offset: 4px;
+  border-radius: 22px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fh .fh-swipeStamp { transition: none; }
+}
+/* =========================================================
+   SWIPE — styling from lp_final + adapted to stacked cards
+   (scoped by existing classes/IDs)
+   ========================================================= */
+
+/* Wrapper jak w lp_final */
+.fh-swipeWrap{
+  border: 1px solid rgba(255,255,255,0.12);
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  border-radius: var(--fh-r-lg);
+  padding: 22px;
+  overflow: hidden;
+  box-shadow: var(--fh-shadow-soft);
+  position: relative;
+}
+
+/* Stage jak w lp_final + izolacja żeby karty nie "prześwitywały" na tekst */
+.fh-swipeStage{
+  position: relative;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(0,0,0,0.22);
+  min-height: 320px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  padding: 14px;
+  user-select: none;
+  touch-action: pan-y;
+  isolation: isolate;
+}
+
+.fh-cardStack{
+  position: relative;
+  width: min(430px, 100%);
+  height: 340px;
+}
+
+/* Twoje karty, ale z „językiem” lp_final */
+.fh-swipeCard{
+  position: absolute;
+  inset: 0;
+  border-radius: 22px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.04);
+  box-shadow: 0 28px 70px rgba(0,0,0,0.55);
+  overflow: hidden;
+  transform: translateZ(0);
+  will-change: transform, opacity;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 12px;
+  padding: 16px;
+}
+
+/* Hero image „z danych” bez zmiany HTML:
+   JS ustawia --fh-swipe-hero: url('...') */
+.fh-swipeCard::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-image:
+    linear-gradient(180deg, rgba(0,0,0,0.06), rgba(0,0,0,0.78)),
+    var(--fh-swipe-hero, none);
+  background-size: cover, cover;
+  background-position: center, center;
+  opacity: 1;
+  pointer-events: none;
+}
+
+/* Delikatny glass na treści, żeby tekst był czytelny na zdjęciu */
+.fh-swipeCard::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(700px 260px at 18% 10%, rgba(217,199,255,0.14), transparent 60%),
+    radial-gradient(700px 280px at 86% 20%, rgba(184,255,208,0.12), transparent 62%);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+/* Content zawsze nad warstwami */
+.fh-swipeCard > *{
+  position: relative;
+  z-index: 1;
+}
+
+/* Under card (ta „pod spodem”) */
+.fh-swipeCard.is-under{
+  transform: scale(0.97) translateY(10px);
+  opacity: 0.78;
+  filter: saturate(0.95);
+}
+
+/* Typo jak w lp_final */
+.fh-swipeHead{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.fh-swipeName{
+  font-weight: 750;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  font-family: var(--fh-sans);
+}
+
+.fh-swipeMeta{
+  color: var(--fh-dim);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.fh-swipeBio{
+  color: rgba(255,255,255,0.78);
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.75;
+  align-self: end;
+}
+
+.fh-swipeFooter{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.fh-swipeBtns{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.fh-swipeHint{
+  color: var(--fh-dim);
+  font-size: 12px;
+}
+
+/* Stamps (YES/NO) — zachowane z poprzedniej logiki */
+.fh-stamp{
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 2px solid rgba(255,255,255,0.26);
+  background: rgba(0,0,0,0.30);
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  font-size: 12px;
+  transform: rotate(-10deg);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 2;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.fh-stamp--no{
+  border-color: rgba(255,77,77,0.40);
+  color: rgba(255,180,180,0.95);
+}
+
+.fh-stamp--yes{
+  left: auto;
+  right: 14px;
+  transform: rotate(10deg);
+  border-color: rgba(184,255,208,0.42);
+  color: rgba(184,255,208,0.96);
+}
+.fh-gradient-text {
+            background: linear-gradient(135deg, #fff 0%, var(--fh-text-sec) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+  
+    /* =========================================================
+       OVERHAUL LAYOUT — more breath + editorial breaks
+       (keeps lp_dark core; additive overrides)
+       ========================================================= */
+
+    /* More vertical rhythm */
+    .fh-section {
+      padding: clamp(56px, 6.5vw, 96px) 0;
+    }
+
+
+
+    /* HERO video background */
+    .fh-hero {
+      position: relative;
+      min-height: clamp(640px, 86vh, 860px);
+      display: grid;
+      align-items: center;
+    }
+
+    .fh-heroVideo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 35%;
+      z-index: 0;
+      filter: saturate(0.95) contrast(1.02) brightness(1.05);
+      transform: translateZ(0);
+    }
+
+    .fh-heroVideoOverlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background:
+        radial-gradient(900px 520px at 14% 18%, rgba(0,0,0,0.64), transparent 62%),
+        radial-gradient(820px 520px at 82% 20%, rgba(0,0,0,0.56), transparent 64%),
+        linear-gradient(180deg, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.42) 40%, rgba(0,0,0,0.70) 100%);
+      pointer-events: none;
+    }
+
+    .fh-hero .fh-wrap { position: relative; z-index: 2; }
+
+    /* Hero side card (replacing live search in hero) */
+    .fh-heroCard {
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(12,12,13,0.62);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-radius: var(--fh-r-lg);
+      padding: 18px;
+      box-shadow: var(--fh-shadow-soft);
+      overflow: hidden;
+    }
+
+    /* Editorial break figure */
+    .fh-break {
+      margin: 22px 0 0;
+      border-radius: var(--fh-r-lg);
+      border: 1px solid rgba(255,255,255,0.12);
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.10), rgba(0,0,0,0.78)),
+        var(--fh-break-bg);
+      background-size: cover;
+      background-position: 50% 35%;
+      min-height: clamp(220px, 30vw, 360px);
+      overflow: hidden;
+      position: relative;
+      box-shadow: var(--fh-shadow-soft);
+      display: grid;
+      align-items: end;
+      transform: translateZ(0);
+    }
+
+    .fh-breakOverlay {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(900px 520px at 12% 8%, rgba(184,255,208,0.12), transparent 62%),
+        radial-gradient(820px 520px at 88% 16%, rgba(217,199,255,0.10), transparent 64%),
+        linear-gradient(180deg, rgba(0,0,0,0.10), rgba(0,0,0,0.82));
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .fh-breakCaption {
+      position: relative;
+      z-index: 1;
+      padding: 18px 18px;
+      display: grid;
+      gap: 6px;
+      max-width: 76ch;
+    }
+
+    .fh-breakCaption strong {
+      font-family: var(--fh-serif);
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      font-size: clamp(18px, 2.1vw, 26px);
+      line-height: 1.05;
+    }
+
+    .fh-breakCaption span {
+      color: rgba(255,255,255,0.78);
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    /* Marquee */
+    @keyframes fh-marquee-scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .fh-marqueeWrap {
+      padding: 34px 0;
+      background: rgba(0,0,0,0.55);
+      border-top: 1px solid rgba(255,255,255,0.10);
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+    }
+
+    .fh-marqueeTrack {
+      display: block;
+      width: 200%;
+      will-change: transform;
+      animation: fh-marquee-scroll 28s linear infinite;
+    }
+
+    .fh-marqueeRow {
+      display: inline-flex;
+      gap: 28px;
+      align-items: center;
+      padding-left: 24px;
+    }
+
+    .fh-marqueeItem {
+      font-family: var(--fh-serif);
+      font-weight: 400;
+      font-size: clamp(18px, 2.4vw, 34px);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.28);
+      white-space: nowrap;
+    }
+
+    .fh-marqueeDot {
+      color: rgba(255,255,255,0.14);
+      font-size: 22px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .fh-marqueeTrack { animation: none !important; transform: none !important; }
+    }
+
+  
+    /* =========================================================
+       MOCK UI: profil + editorial/grid/masonry demo
+       ========================================================= */
+    .fh-profileMini {
+      margin-top: 22px;
+    }
+
+    .fh-profileMini__shell {
+      position: relative;
+      border-radius: 22px;
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 26px 80px rgba(0,0,0,0.55);
+      isolation: isolate;
+    }
+
+    .fh-profileMini__shell::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(650px 280px at 20% -10%, rgba(184,255,208,0.12), transparent 55%),
+        radial-gradient(500px 260px at 90% 10%, rgba(153,198,255,0.10), transparent 60%),
+        linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.0));
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .fh-profileMini__head {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 18px 14px;
+      grid-template-columns: 56px 1fr auto;
+    }
+
+    .fh-profileMini__avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      background:
+        radial-gradient(18px 18px at 30% 25%, rgba(255,255,255,0.85), rgba(255,255,255,0.0) 60%),
+        linear-gradient(135deg, rgba(184,255,208,0.52), rgba(153,198,255,0.34));
+      box-shadow: 0 10px 26px rgba(0,0,0,0.35);
+      border: 1px solid rgba(255,255,255,0.22);
+      flex: 0 0 auto;
+    }
+
+    .fh-profileMini__who { min-width: 0; }
+    .fh-profileMini__name {
+      font-family: var(--fh-serif);
+      font-size: 18px;
+      line-height: 1.15;
+      color: var(--fh-ink);
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .fh-profileMini__meta {
+      margin-top: 4px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.72);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .fh-profileMini__badge {
+      margin-left: auto;
+      font-size: 12px;
+      color: rgba(0,0,0,0.86);
+      background: rgba(255,255,255,0.90);
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.45);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+      flex: 0 0 auto;
+    }
+
+    .fh-profileMini__gridWrap{
+  display:grid;
+  grid-template-columns: minmax(0, 1fr) 260px; /* prawa kolumna węższa */
+  gap:16px;
+  align-items:start;
+}
+
+
+    @media (min-width: 760px) {
+      .fh-profileMini__gridWrap { grid-template-columns: 1.35fr 0.95fr; gap: 16px; }
+    }
+
+    .fh-profileMini__grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 10px;
+      align-content: start;
+    }
+
+    .fh-profileMini__tile {
+      display: block;
+      border-radius: 14px;
+      aspect-ratio: 1 / 1;
+      background-color: rgba(255,255,255,0.06);
+      box-shadow: 0 14px 44px rgba(0,0,0,0.35);
+      background-size: cover;
+      background-position: 50% 35%;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .fh-profileMini__tile::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.0), rgba(0,0,0,0.30));
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .fh-profileMini__tile--1 { background-image: url("https://images.unsplash.com/photo-1520975916090-3105956dac38?auto=format&fit=crop&w=900&q=60"); }
+    .fh-profileMini__tile--2 { background-image: url("https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=900&q=60"); }
+    .fh-profileMini__tile--3 { background-image: url("https://images.unsplash.com/photo-1488161628813-04466f872be2?auto=format&fit=crop&w=900&q=60"); }
+    .fh-profileMini__tile--4 { background-image: url("https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=60"); }
+    .fh-profileMini__tile--5 { background-image: url("https://images.unsplash.com/photo-1520975958221-4b8b2c5b14b2?auto=format&fit=crop&w=900&q=60"); }
+    .fh-profileMini__tile--6 { background-image: url("https://images.unsplash.com/photo-1520975681961-6b7ce2368c8e?auto=format&fit=crop&w=900&q=60"); }
+
+    .fh-profileMini__side {
+      display: grid;
+      gap: 10px;
+      align-content: start;
+    }
+
+    .fh-miniCard {
+      border-radius: 16px;
+      padding: 12px 12px;
+      background: rgba(0,0,0,0.22);
+      border: 1px solid rgba(255,255,255,0.10);
+      box-shadow: 0 14px 44px rgba(0,0,0,0.30);
+    }
+    .fh-miniCard__label {
+      font-size: 12px;
+      color: rgba(255,255,255,0.72);
+      margin-bottom: 8px;
+    }
+    .fh-miniCard__value { display: flex; align-items: center; gap: 10px; }
+
+    .fh-pill--ok {
+      border-color: rgba(184,255,208,0.28);
+      background: rgba(184,255,208,0.10);
+      color: rgba(236,255,245,0.92);
+    }
+
+    .fh-miniCard--stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 10px;
+    }
+
+    .fh-miniStat {
+      border-radius: 14px;
+      padding: 10px 10px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.10);
+      text-align: center;
+    }
+    .fh-miniStat__kpi {
+      font-family: var(--fh-serif);
+      font-size: 16px;
+      color: rgba(255,255,255,0.92);
+      letter-spacing: -0.01em;
+    }
+    .fh-miniStat__cap {
+      margin-top: 4px;
+      font-size: 11px;
+      color: rgba(255,255,255,0.66);
+    }
+
+    .fh-tagRow { display: flex; flex-wrap: wrap; gap: 8px; }
+    .fh-tag {
+      font-size: 12px;
+      padding: 7px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.03);
+      color: rgba(255,255,255,0.78);
+      user-select: none;
+    }
+
+    .fh-miniCard--cta { display: grid; gap: 10px; }
+    .fh-miniBtn {
+      width: 100%;
+      border-radius: 12px;
+      padding: 10px 12px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.92);
+      color: rgba(0,0,0,0.88);
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 160ms var(--fh-ease), filter 160ms var(--fh-ease);
+    }
+    .fh-miniBtn:hover { transform: translateY(-1px); filter: brightness(0.98); }
+    .fh-miniBtn--ghost {
+      background: rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.86);
+      border-color: rgba(255,255,255,0.14);
+    }
+
+    /* =========================================================
+       MOCK UI: editorial preview block
+       ========================================================= */
+    .fh-uiMock {
+      border-radius: 22px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+      box-shadow: 0 28px 86px rgba(0,0,0,0.62);
+      isolation: isolate;
+    }
+
+    .fh-uiMock__top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+      background: rgba(0,0,0,0.26);
+    }
+
+    .fh-uiMock__brand {
+      font-family: var(--fh-serif);
+      letter-spacing: -0.02em;
+      color: rgba(255,255,255,0.92);
+      font-size: 16px;
+    }
+
+    .fh-uiMock__tabs {
+      display: flex;
+      gap: 8px;
+      margin-left: 6px;
+      flex: 1 1 auto;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .fh-uiMock__tab {
+      font-size: 12px;
+      padding: 7px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.74);
+      background: rgba(255,255,255,0.03);
+      white-space: nowrap;
+    }
+
+    .fh-uiMock__tab.is-active {
+      background: rgba(255,255,255,0.92);
+      color: rgba(0,0,0,0.88);
+      border-color: rgba(255,255,255,0.35);
+    }
+
+    .fh-uiMock__chip {
+      font-size: 12px;
+      padding: 7px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(184,255,208,0.22);
+      background: rgba(184,255,208,0.08);
+      color: rgba(236,255,245,0.88);
+      flex: 0 0 auto;
+    }
+
+    .fh-uiMock__hero {
+      height: 220px;
+      background-image:
+        linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.55)),
+        url("https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1600&q=60");
+      background-size: cover;
+      background-position: 50% 45%;
+    }
+
+    .fh-uiMock__thumbs {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0,1fr));
+      gap: 10px;
+      padding: 14px 14px;
+    }
+
+    @media (max-width: 760px) {
+      .fh-uiMock__thumbs { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    }
+
+    .fh-uiMock__thumb {
+      aspect-ratio: 1 / 1;
+      border-radius: 14px;
+      background-size: cover;
+      background-position: 50% 40%;
+      box-shadow: 0 14px 44px rgba(0,0,0,0.34);
+    }
+
+    .fh-uiMock__thumb--1 { background-image: url("https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=800&q=60"); }
+    .fh-uiMock__thumb--2 { background-image: url("https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=60"); }
+    .fh-uiMock__thumb--3 { background-image: url("https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=800&q=60"); }
+    .fh-uiMock__thumb--4 { background-image: url("https://images.unsplash.com/photo-1520975681976-3f7be3e0e4bf?auto=format&fit=crop&w=800&q=60"); }
+    .fh-uiMock__thumb--5 { background-image: url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=60"); }
+    .fh-uiMock__thumb--6 { background-image: url("https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=60"); }
+
+    .fh-uiMock__footer {
+      padding: 12px 14px 14px;
+      border-top: 1px solid rgba(255,255,255,0.10);
+      background: rgba(0,0,0,0.22);
+    }
+
+    .fh-uiMock__hint {
+      font-size: 12px;
+      color: rgba(255,255,255,0.70);
+    }
+
+    /* =========================================================
+       GRID DEMO (interactive)
+       ========================================================= */
+    .fh-gridDemo {
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+      box-shadow: 0 28px 86px rgba(0,0,0,0.62);
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+      isolation: isolate;
+    }
+
+    .fh-gridDemo__tile {
+      border-radius: 16px;
+      background-size: cover;
+      background-position: 50% 38%;
+      box-shadow: 0 14px 44px rgba(0,0,0,0.34);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .fh-gridDemo__tile::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.0), rgba(0,0,0,0.35));
+      opacity: 0.75;
+      pointer-events: none;
+    }
+
+    .fh-gridDemo__tile--1 { background-image: url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=60"); }
+    .fh-gridDemo__tile--2 { background-image: url("https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=1200&q=60"); }
+    .fh-gridDemo__tile--3 { background-image: url("https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=60"); }
+    .fh-gridDemo__tile--4 { background-image: url("https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1200&q=60"); }
+    .fh-gridDemo__tile--5 { background-image: url("https://images.unsplash.com/photo-1520975681976-3f7be3e0e4bf?auto=format&fit=crop&w=1200&q=60"); }
+    .fh-gridDemo__tile--6 { background-image: url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=60"); }
+    .fh-gridDemo__tile--7 { background-image: url("https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=1200&q=60"); }
+    .fh-gridDemo__tile--8 { background-image: url("https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=60"); }
+
+    .fh-gridDemo.is-grid {
+      grid-template-columns: repeat(4, minmax(0,1fr));
+    }
+    .fh-gridDemo.is-grid .fh-gridDemo__tile { aspect-ratio: 1 / 1; }
+
+    .fh-gridDemo.is-editorial {
+      grid-template-columns: repeat(6, minmax(0,1fr));
+    }
+    .fh-gridDemo.is-editorial .fh-gridDemo__tile { aspect-ratio: 4 / 3; }
+    .fh-gridDemo.is-editorial .fh-gridDemo__tile--1 { grid-column: span 4; aspect-ratio: 16 / 9; }
+    .fh-gridDemo.is-editorial .fh-gridDemo__tile--2 { grid-column: span 2; }
+    .fh-gridDemo.is-editorial .fh-gridDemo__tile--3 { grid-column: span 2; }
+    .fh-gridDemo.is-editorial .fh-gridDemo__tile--4 { grid-column: span 3; aspect-ratio: 3 / 2; }
+    .fh-gridDemo.is-editorial .fh-gridDemo__tile--5 { grid-column: span 3; aspect-ratio: 3 / 2; }
+    .fh-gridDemo.is-editorial .fh-gridDemo__tile--6,
+    .fh-gridDemo.is-editorial .fh-gridDemo__tile--7,
+    .fh-gridDemo.is-editorial .fh-gridDemo__tile--8 { grid-column: span 2; }
+
+    @media (max-width: 760px) {
+      .fh-gridDemo.is-editorial { grid-template-columns: repeat(3, minmax(0,1fr)); }
+      .fh-gridDemo.is-editorial .fh-gridDemo__tile--1 { grid-column: span 3; }
+      .fh-gridDemo.is-editorial .fh-gridDemo__tile--4,
+      .fh-gridDemo.is-editorial .fh-gridDemo__tile--5 { grid-column: span 3; }
+      .fh-gridDemo.is-editorial .fh-gridDemo__tile--6,
+      .fh-gridDemo.is-editorial .fh-gridDemo__tile--7,
+      .fh-gridDemo.is-editorial .fh-gridDemo__tile--8 { grid-column: span 1; }
+    }
+
+    .fh-gridDemo.is-masonry {
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      grid-auto-rows: 90px;
+    }
+    .fh-gridDemo.is-masonry .fh-gridDemo__tile { aspect-ratio: auto; }
+    .fh-gridDemo.is-masonry .fh-gridDemo__tile--1 { grid-column: span 2; grid-row: span 3; }
+    .fh-gridDemo.is-masonry .fh-gridDemo__tile--2 { grid-column: span 2; grid-row: span 2; }
+    .fh-gridDemo.is-masonry .fh-gridDemo__tile--3 { grid-column: span 1; grid-row: span 2; }
+    .fh-gridDemo.is-masonry .fh-gridDemo__tile--4 { grid-column: span 1; grid-row: span 3; }
+    .fh-gridDemo.is-masonry .fh-gridDemo__tile--5 { grid-column: span 2; grid-row: span 3; }
+    .fh-gridDemo.is-masonry .fh-gridDemo__tile--6 { grid-column: span 2; grid-row: span 2; }
+    .fh-gridDemo.is-masonry .fh-gridDemo__tile--7 { grid-column: span 2; grid-row: span 2; }
+    .fh-gridDemo.is-masonry .fh-gridDemo__tile--8 { grid-column: span 2; grid-row: span 3; }
+
+    @media (max-width: 760px) {
+      .fh-gridDemo.is-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .fh-gridDemo.is-masonry { grid-template-columns: repeat(2, minmax(0,1fr)); grid-auto-rows: 88px; }
+      .fh-gridDemo.is-masonry .fh-gridDemo__tile--1 { grid-column: span 2; grid-row: span 3; }
+      .fh-gridDemo.is-masonry .fh-gridDemo__tile--2 { grid-column: span 2; grid-row: span 2; }
+      .fh-gridDemo.is-masonry .fh-gridDemo__tile--4 { grid-column: span 1; grid-row: span 2; }
+      .fh-gridDemo.is-masonry .fh-gridDemo__tile--5 { grid-column: span 2; grid-row: span 3; }
+      .fh-gridDemo.is-masonry .fh-gridDemo__tile--8 { grid-column: span 2; grid-row: span 2; }
+    }
+    .fh-profileMini__gridWrap{
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 120px);
+  gap: 16px;
+  align-items: start;
+}
+
+.fh-profileMini__bottom{
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 12px;
+}
+
+.fh-miniCard--stats{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.fh-miniCard--cta{
+  display: grid;
+  gap: 10px;
+}
+
+@media (max-width: 900px){
+  .fh-profileMini__gridWrap{
+    grid-template-columns: 1fr;
+  }
+  .fh-miniCard--stats{
+    grid-template-columns: 1fr;
+  }
+}
+.fhg-grids{
+  padding: 64px 0;
+}
+
+.fhg-grids__inner{
+  width: min(1120px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.fhg-grids__header{
+  margin-bottom: 18px;
+}
+
+.fhg-grids__eyebrow{
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-size: 12px;
+  opacity: 0.8;
+  margin-bottom: 10px;
+}
+
+.fhg-grids__title{
+  font-size: clamp(28px, 3.2vw, 44px);
+  line-height: 1.05;
+  margin: 0 0 12px;
+}
+
+.fhg-grids__lead{
+  max-width: 76ch;
+  margin: 0 0 14px;
+  opacity: 0.85;
+  line-height: 1.55;
+}
+
+.fhg-grids__note{
+  margin: 10px 0 0;
+  opacity: 0.65;
+  font-size: 13px;
+}
+
+.fhg-grids__chips{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 10px 0 0;
+}
+
+.fhg-chip{
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+  color: inherit;
+  padding: 10px 14px;
+  border-radius: 999px;
+  font: inherit;
+  cursor: pointer;
+  transition: transform 120ms ease, background 120ms ease, border-color 120ms ease;
+}
+
+.fhg-chip:hover{
+  transform: translateY(-1px);
+  background: rgba(255,255,255,0.09);
+  border-color: rgba(255,255,255,0.18);
+}
+
+.fhg-chip.is-active{
+  background: rgba(255,255,255,0.14);
+  border-color: rgba(255,255,255,0.26);
+}
+
+.fhg-preview{
+  border-radius: 18px;
+  overflow: hidden;            /* klucz: brak “szpar” na krawędziach */
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.03);
+}
+
+/* ważne: brak gapów i brak “linii” z inline img */
+.fhg-tile{
+  margin: 0;
+  padding: 0;
+  break-inside: avoid;
+}
+
+.fhg-tile img{
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* GRID: równe kafle, bez przerw */
+.fhg-preview--grid{
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+}
+
+.fhg-preview--grid .fhg-tile{
+  aspect-ratio: 1 / 1;
+}
+
+.fhg-preview--grid .fhg-tile img{
+  height: 100%;
+  object-fit: cover;
+}
+
+/* EDITORIAL: rytm + większe kadry, dalej bez gapów */
+.fhg-preview--editorial{
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-auto-rows: 96px;
+  gap: 0;
+}
+
+.fhg-preview--editorial .fhg-tile{
+  height: 100%;
+}
+
+.fhg-preview--editorial .fhg-tile img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fhg-preview--editorial .fhg-tile:nth-child(1){ grid-column: 1 / span 3; grid-row: 1 / span 3; }
+.fhg-preview--editorial .fhg-tile:nth-child(2){ grid-column: 4 / span 3; grid-row: 1 / span 2; }
+.fhg-preview--editorial .fhg-tile:nth-child(3){ grid-column: 4 / span 2; grid-row: 3 / span 2; }
+.fhg-preview--editorial .fhg-tile:nth-child(4){ grid-column: 6 / span 1; grid-row: 3 / span 2; }
+
+.fhg-preview--editorial .fhg-tile:nth-child(n+5){
+  grid-column: auto / span 2;
+  grid-row: auto / span 2;
+}
+
+/* MASONRY: kolumny, bez przerw między obrazami */
+.fhg-preview--masonry{
+  column-count: 3;
+  column-gap: 0;
+}
+
+.fhg-preview--masonry .fhg-tile{
+  break-inside: avoid;
+}
+
+@media (max-width: 980px){
+  .fhg-preview--grid{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .fhg-preview--masonry{ column-count: 2; }
+  .fhg-preview--editorial{ grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: 88px; }
+}
+
+@media (max-width: 640px){
+  .fhg-grids{ padding: 44px 0; }
+  .fhg-grids__inner{ width: min(1120px, calc(100% - 28px)); }
+  .fhg-preview--grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fhg-preview--masonry{ column-count: 1; }
+  .fhg-preview--editorial{ grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 84px; }
+}
+
+</style>
+</head>
+<body class="fh">
+<!-- =========================================================
+       HEADER
+       ========================================================= -->
+<header class="fh-topbar">
+<div class="fh-wrap">
+<nav aria-label="Nawigacja" class="fh-nav">
+<a aria-label="Facehub — strona główna" class="fh-brand" href="#top">
+<span aria-hidden="true" class="fh-brandMark"></span>
+<span class="fh-brandName">Facehub</span>
+</a>
+<div aria-label="Skróty" class="fh-navlinks">
+<a href="#jak">Jak to działa</a>
+<a href="#bezpieczenstwo">Bezpieczeństwo</a>
+<a href="#swipe">Swipe i AI</a>
+<a href="#faq">FAQ</a>
+</div>
+<div class="fh-navctas">
+<button class="fh-btn fh-btn--ghost" data-fh-action="login" type="button">Zaloguj</button>
+<button class="fh-btn fh-btn--primary" data-fh-action="signup" type="button">Załóż darmowe konto</button>
+</div>
+</nav>
+</div>
+</header>
+<main id="top">
+<!-- =========================================================
+         HERO
+         ========================================================= -->
+<section class="fh-hero">
+<div aria-hidden="true" class="fh-heroVideoOverlay"></div>
+<video aria-hidden="true" autoplay="" class="fh-heroVideo" loop="" muted="" playsinline="" preload="metadata">
+<source src="./Fashion_Shoot_Cinematic_Sequence.mp4" type="video/mp4"/>
+</video>
+<div class="fh-wrap">
+<div class="fh-heroGrid">
+<div class="fh-reveal">
+<div class="fh-kicker">
+<span aria-hidden="true" class="fh-kickerDot"></span>
+<span>Editorial portfolio • networking • konta zweryfikowane</span>
+</div>
+<h1 class="fh-h1">Twórz sztukę.<br/><span class="fh-gradient-text">Bezpiecznie.</span></h1>
+<p class="fh-lead">
+              Facehub łączy modelki, modeli, fotografów, wizażystów, agencje, skautów i marki w całej Polsce.
+              Buduj portfolio, poznawaj ludzi i rozmawiaj o współpracach w środowisku, gdzie bezpieczeństwo jest fundamentem.
+            </p>
+<div class="fh-heroCtas">
+<button class="fh-btn fh-btn--primary" data-fh-action="signup" type="button">
+                Załóż konto i uzupełnij portfolio
+              </button>
+<a class="fh-btn" href="#bezpieczenstwo">
+                Zobacz standard bezpieczeństwa
+              </a>
+</div>
+
+</div>
+<!-- Hero side card (editorial break) -->
+<aside aria-label="Dlaczego Facehub" class="fh-heroCard fh-reveal">
+<div class="fh-cardTitle">Dlaczego Facehub?</div>
+<p class="fh-cardText" style="margin: 0 0 10px;">
+              Portfolio i networking zaprojektowane jak editorial — z naciskiem na weryfikację, porządek i czytelny sygnał zaufania.
+            </p>
+<ul class="fh-list" style="margin: 0; padding-left: 18px;">
+<li>Zweryfikowane konta i moderacja</li>
+<li>Minimalistyczny „no-clutter” układ profilu</li>
+<li>Shortlisty, swipe i AI matching jako sugestie</li>
+</ul>
+</aside>
+</div>
+</div>
+</section>
+<!-- =========================================================
+         LIVE SEARCH (moved below hero)
+         ========================================================= -->
+<section class="fh-section fh-section--alt" id="live-search">
+<div class="fh-wrap">
+<div class="fh-split">
+<div class="fh-reveal">
+<div class="fh-eyebrow">Wyszukiwarka</div>
+<h2 class="fh-h2">Szybki screening talentów.</h2>
+<p class="fh-sub">
+              Zamiast „ściany profili” — wyszukuj po roli, mieście i tagach. Kliknij wynik, żeby otworzyć podgląd profilu w modalu.
+              W produkcie: zapisane wyszukiwania, shortlisty i kontrola prywatności.
+            </p>
+
+<div aria-label="Podgląd profilu (mock)" class="fh-profileMini fh-reveal">
+  <div class="fh-profileMini__shell">
+    <div class="fh-profileMini__head">
+      <div aria-hidden="true" class="fh-profileMini__avatar"></div>
+  
+      <div class="fh-profileMini__who">
+        <div class="fh-profileMini__name">Alicja Nowak</div>
+        <div class="fh-profileMini__meta">Modelka • Warszawa • 24 • 173 cm</div>
+      </div>
+  
+      <span class="fh-badge"><span class="fh-badgeDot" aria-hidden="true"></span>Verified</span>    </div>
+  
+    <div class="fh-profileMini__gridWrap">
+      <div aria-label="Siatka zdjęć (placeholder)" class="fh-profileMini__grid">
+        <span aria-hidden="true" class="fh-profileMini__tile fh-profileMini__tile--1"></span>
+        <span aria-hidden="true" class="fh-profileMini__tile fh-profileMini__tile--2"></span>
+        <span aria-hidden="true" class="fh-profileMini__tile fh-profileMini__tile--3"></span>
+        <span aria-hidden="true" class="fh-profileMini__tile fh-profileMini__tile--4"></span>
+        <span aria-hidden="true" class="fh-profileMini__tile fh-profileMini__tile--5"></span>
+        <span aria-hidden="true" class="fh-profileMini__tile fh-profileMini__tile--6"></span>
+      </div>
+  
+      <div aria-label="Elementy interfejsu (placeholder)" class="fh-profileMini__side">
+        <div class="fh-miniCard fh-miniCard--availability">
+          <div class="fh-miniCard__label">Dostępność</div>
+          <div class="fh-miniCard__value">
+            <span class="fh-pill fh-pill--ok">W tym tygodniu</span>
+          </div>
+        </div>
+      
+        <div class="fh-miniCard fh-miniCard--cta">
+          <button class="fh-miniBtn" type="button">Zaproponuj współpracę</button>
+          <button class="fh-miniBtn fh-miniBtn--ghost" type="button">Dodaj do shortlisty</button>
+        </div>
+      </div>
+      
+  
+      <div class="fh-profileMini__bottom" aria-label="Dodatkowe informacje profilu">
+
+  
+        <div class="fh-miniCard fh-miniCard--tags">
+          <div class="fh-miniCard__label">Tagi</div>
+          <div class="fh-tagRow" role="list">
+            <span class="fh-tag" role="listitem">beauty</span>
+            <span class="fh-tag" role="listitem">editorial</span>
+            <span class="fh-tag" role="listitem">e-commerce</span>
+            <span class="fh-tag" role="listitem">runway</span>
+          </div>
+        </div>
+  
+        <div class="fh-miniCard fh-miniCard--stats">
+          <div class="fh-miniStat">
+            <div class="fh-miniStat__kpi">38</div>
+            <div class="fh-miniStat__cap">sesji</div>
+          </div>
+          <div class="fh-miniStat">
+            <div class="fh-miniStat__kpi">92%</div>
+            <div class="fh-miniStat__cap">odpowiedzi</div>
+          </div>
+          <div class="fh-miniStat">
+            <div class="fh-miniStat__kpi">1.2h</div>
+            <div class="fh-miniStat__cap">średnio</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+</div>
+<aside aria-label="Wyszukiwarka (demo UX)" class="fh-heroPanel fh-reveal">
+<div class="fh-panelInner">
+<div class="fh-panelTitleRow">
+<div class="fh-panelTitle">Znajdź talent</div>
+<div class="fh-panelMeta">Live demo</div>
+</div>
+<div class="fh-searchBar">
+<input aria-label="Wyszukiwarka" autocomplete="off" class="fh-input" id="fhSearchInput" placeholder="Szukaj: modelka, fotograf, beauty, Warszawa…" type="text"/>
+<button aria-label="Szukaj" class="fh-btn" id="fhSearchBtn" type="button">Szukaj</button>
+</div>
+<div aria-label="Filtry" class="fh-chipRow">
+<button class="fh-chip is-active" data-fh-filter="all" type="button">Wszystko</button>
+<button class="fh-chip" data-fh-filter="model" type="button">Modelka / Model</button>
+<button class="fh-chip" data-fh-filter="photo" type="button">Fotograf</button>
+<button class="fh-chip" data-fh-filter="mua" type="button">Wizaż</button>
+<button class="fh-chip" data-fh-filter="agency" type="button">Agencja</button>
+<button class="fh-chip is-verified" data-fh-filter="verified" type="button">Verified</button>
+</div>
+<div aria-live="polite" class="fh-results" id="fhResults"></div>
+<div class="fh-note">
+                Kliknij wynik, żeby otworzyć podgląd profilu w modalu. W produkcie: dodatkowe filtry, sortowanie, zapisane wyszukiwania.
+              </div>
+</div>
+</aside>
+</div>
+</div>
+</section>
+<!-- =========================================================
+         MARQUEE (editorial break)
+         ========================================================= -->
+<div aria-hidden="true" class="fh-marqueeWrap">
+<div class="fh-marqueeTrack">
+<div class="fh-marqueeRow">
+<span class="fh-marqueeItem">MODELING</span>
+<span class="fh-marqueeDot">•</span>
+<span class="fh-marqueeItem">PHOTOGRAPHY</span>
+<span class="fh-marqueeDot">•</span>
+<span class="fh-marqueeItem">STYLING</span>
+<span class="fh-marqueeDot">•</span>
+<span class="fh-marqueeItem">AGENCIES</span>
+<span class="fh-marqueeDot">•</span>
+<span class="fh-marqueeItem">SCOUTING</span>
+<span class="fh-marqueeDot">•</span>
+<span class="fh-marqueeItem">BACKSTAGE</span>
+<span class="fh-marqueeDot">•</span>
+<span class="fh-marqueeItem">MODELING</span>
+<span class="fh-marqueeDot">•</span>
+<span class="fh-marqueeItem">PHOTOGRAPHY</span>
+<span class="fh-marqueeDot">•</span>
+<span class="fh-marqueeItem">STYLING</span>
+</div>
+</div>
+</div>
+<!-- =========================================================
+         HOW IT WORKS
+         ========================================================= -->
+<section class="fh-section" id="jak">
+<div class="fh-wrap">
+<div class="fh-reveal">
+<div class="fh-eyebrow">Jak to działa</div>
+<h2 class="fh-h2">30 sekund do zrozumienia.</h2>
+<p class="fh-sub">
+            Rejestrujesz się, wybierasz rolę, tworzysz profil i portfolio. Potem: wyszukujesz, rozmawiasz, odpowiadasz na ogłoszenia/casting
+            — a wszystko w standardzie, który redukuje spam i podszywanie się.
+          </p>
+<div class="fh-rule"></div>
+</div>
+<div class="fh-cards3" style="margin-top: 22px;">
+<article class="fh-card fh-reveal">
+<div class="fh-cardTitle"> Rola i profil</div>
+<p class="fh-cardText">
+              Modelka/Model, Fotograf, Wizażysta, Agencja, Marka (klient), Skaut — profil od razu komunikuje „kim jesteś” i w jakich projektach działasz.
+            </p>
+</article>
+<article class="fh-card fh-reveal">
+<div class="fh-cardTitle"> Portfolio w estetyce editorial</div>
+<p class="fh-cardText">
+              Zdjęcia i projekty grają pierwsze skrzypce. Układ jest minimalistyczny i dopracowany — bez „katalogowego” chaosu.
+            </p>
+</article>
+<article class="fh-card fh-reveal">
+<div class="fh-cardTitle"> Współprace, nie przypadek</div>
+<p class="fh-cardText">
+              Live search + filtry + podglądy profili. Docelowo: swipe do szybkiej selekcji oraz AI matching jako sugestia, nie obietnica.
+            </p>
+</article>
+</div>
+</div>
+</section>
+<div class="fh-wrap">
+  <section class="fhg-grids" aria-label="Galerie — wybór siatki (demo)">
+    <div class="fhg-grids__inner">
+      <header class="fhg-grids__header">
+        <div class="fhg-grids__eyebrow">Galerie</div>
+        <h2 class="fhg-grids__title">Siatki, które dopasujesz do stylu.</h2>
+        <p class="fhg-grids__lead">
+          Nie każda sesja wygląda dobrze w tym samym układzie. Użytkownik wybiera siatkę wyświetlania:
+          klasyczny grid, masonry (zróżnicowane wysokości) albo editorial (duże kadry + rytm).
+        </p>
+  
+        <div class="fhg-grids__chips" role="group" aria-label="Wybór siatki (demo)">
+          <button class="fhg-chip is-active" type="button" data-fhg-mode="editorial" aria-pressed="true">Editorial</button>
+          <button class="fhg-chip" type="button" data-fhg-mode="grid" aria-pressed="false">Grid</button>
+          <button class="fhg-chip" type="button" data-fhg-mode="masonry" aria-pressed="false">Masonry</button>
+        </div>
+  
+        <p class="fhg-grids__note">
+          Mock podglądu — w produkcie użytkownik zapisuje układ per projekt/profil.
+        </p>
+      </header>
+  
+      <div class="fhg-preview fhg-preview--masonry" id="fhgPreview" aria-label="Podgląd siatki (mock)">
+        <!-- używam img zamiast background, żebyś mógł łatwo podmienić URL-e -->
+  
+        <figure class="fhg-tile"><img alt="" loading="lazy" src="https://picsum.photos/seed/fhg01/900/1200"></figure>
+        <figure class="fhg-tile"><img alt="" loading="lazy" src="https://picsum.photos/seed/fhg02/900/1100"></figure>
+        <figure class="fhg-tile"><img alt="" loading="lazy" src="https://picsum.photos/seed/fhg03/900/1300"></figure>
+        <figure class="fhg-tile"><img alt="" loading="lazy" src="https://picsum.photos/seed/fhg04/900/1000"></figure>
+        <figure class="fhg-tile"><img alt="" loading="lazy" src="https://picsum.photos/seed/fhg05/900/1400"></figure>
+        <figure class="fhg-tile"><img alt="" loading="lazy" src="https://picsum.photos/seed/fhg06/900/1150"></figure>
+        <figure class="fhg-tile"><img alt="" loading="lazy" src="https://picsum.photos/seed/fhg07/900/1250"></figure>
+        <figure class="fhg-tile"><img alt="" loading="lazy" src="https://picsum.photos/seed/fhg08/900/1050"></figure>
+        <figure class="fhg-tile"><img alt="" loading="lazy" src="https://picsum.photos/seed/fhg09/900/1350"></figure>
+        <figure class="fhg-tile"><img alt="" loading="lazy" src="https://picsum.photos/seed/fhg10/900/1080"></figure>
+        <figure class="fhg-tile"><img alt="" loading="lazy" src="https://picsum.photos/seed/fhg11/900/1280"></figure>
+        <figure class="fhg-tile"><img alt="" loading="lazy" src="https://picsum.photos/seed/fhg12/900/1120"></figure>
+      </div>
+    </div>
+  
+    <!-- mini JS tylko dla tej sekcji (żeby demo działało standalone) -->
+    <script>
+      (function () {
+        var root = document.currentScript && document.currentScript.closest('.fhg-grids');
+        if (!root) return;
+  
+        var preview = root.querySelector('#fhgPreview');
+        var chips = Array.prototype.slice.call(root.querySelectorAll('[data-fhg-mode]'));
+  
+        function setMode(mode) {
+          if (!preview) return;
+          preview.classList.remove('fhg-preview--grid', 'fhg-preview--masonry', 'fhg-preview--editorial');
+          preview.classList.add('fhg-preview--' + mode);
+  
+          chips.forEach(function (btn) {
+            var isOn = btn.getAttribute('data-fhg-mode') === mode;
+            btn.classList.toggle('is-active', isOn);
+            btn.setAttribute('aria-pressed', isOn ? 'true' : 'false');
+          });
+        }
+  
+        chips.forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            setMode(btn.getAttribute('data-fhg-mode'));
+          });
+        });
+  
+        setMode('masonry');
+      })();
+    </script>
+  </section>
+  
+</div>
+<!-- =========================================================
+         SAFETY
+         ========================================================= -->
+<section class="fh-section fh-section--alt" id="bezpieczenstwo">
+<div class="fh-wrap">
+<div class="fh-split">
+<div class="fh-reveal">
+<div class="fh-eyebrow">Bezpieczeństwo</div>
+<h2 class="fh-h2">Weryfikacja i moderacja jako fundament.</h2>
+<p class="fh-sub">
+              Facehub jest projektowany tak, by ograniczać scamy już na poziomie zasad i UX. Verified to warstwa zaufania, a nie marketingowy znaczek.
+            </p>
+<ul class="fh-list">
+<li><strong>Oznaczenie VERIFIED</strong> i transparentny status profilu (np. w trakcie weryfikacji / zweryfikowany).</li>
+<li><strong>Zgłoszenia i blokady</strong> dostępne z poziomu profilu, wiadomości i wyników wyszukiwania.</li>
+<li><strong>Ograniczenia antyspamowe</strong> (np. widoczność danych kontaktowych tylko w bezpiecznym kontekście).</li>
+<li><strong>Zasady treści</strong> + moderacja — żeby platforma była profesjonalna, a nie „tablica ogłoszeń bez kontroli”.</li>
+</ul>
+<div class="fh-note">
+              Mikrocopy do UI: „Zweryfikuj konto, by zwiększyć wiarygodność.” • „Zgłoś nadużycie — reagujemy priorytetowo.” • „Nie wysyłaj wrażliwych danych poza platformą.”
+            </div>
+</div>
+<div class="fh-card fh-reveal">
+<div class="fh-cardTitle">Co oznacza <span class="fh-badge"><span class="fh-badgeDot" aria-hidden="true"></span>Verified</span></div>
+<p class="fh-cardText">
+              „Zweryfikowane konto” oznacza, że potwierdziliśmy tożsamość i spójność profilu zgodnie z zasadami Facehub.
+              To nie gwarancja współpracy — to redukcja ryzyka i czytelny sygnał zaufania.
+            </p>
+<div class="fh-rule"></div>
+<div class="fh-cardTitle" style="margin-top: 14px;">Proponowany proces</div>
+<ul class="fh-list">
+<li> Materiał weryfikacyjny (np. wideo-selfie lub inny bezpieczny krok w aplikacji).</li>
+<li> Weryfikacja spójności profilu (rola, portfolio, podstawowe dane).</li>
+<li> Nadanie odznaki VERIFIED + re-weryfikacja przy podejrzanej aktywności.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<!-- =========================================================
+         SWIPE + AI
+         ========================================================= -->
+         <section class="fh-section" id="swipe">
+          <div class="fh-wrap">
+          <div class="fh-split">
+          <div class="fh-reveal">
+          <div class="fh-eyebrow">Swipe i AI</div>
+          <h2 class="fh-h2">Nowoczesność, która ma sens.</h2>
+          <p class="fh-sub">
+                              Docelowo: swipe do szybkiego przeglądania talentów i prac, oraz AI matching jako sugestie współprac.
+                              Na LP pokazujemy kierunek bez obietnic „magii” — liczy się wiarygodność.
+                            </p>
+          <div class="fh-card" style="margin-top:12px;">
+          <div class="fh-cardTitle">AI matching — teaser (3 kroki)</div>
+          <ul class="fh-list">
+          <li><strong>Preferencje</strong>: typ sesji, estetyka, lokalizacja, dostępność, zakres współpracy.</li>
+          <li><strong>Synergia portfolio</strong>: podobne klimaty i cele projektu, nie „losowy ranking”.</li>
+          <li><strong>Sugestie</strong>: propozycje dopasowań + krótsza ścieżka do zaproszenia.</li>
+          </ul>
+          </div>
+          <div class="fh-note">Komunikacja celowo ostrożna: AI ma pomagać, a nie zastępować Twojej decyzji.</div>
+          </div>
+          <div aria-label="Swipe demo" class="fh-swipeWrap fh-reveal">
+          <div class="fh-cardTitle">Swipe demo (interaktywny teaser)</div>
+          <p class="fh-cardText" style="margin:6px 0 14px;">
+                              Przeciągnij kartę lewo/prawo albo użyj przycisków. Zdjęcia i dane są podpięte z mock bazy.
+                            </p>
+          <div aria-label="Strefa swipe" class="fh-swipeStage" id="fhSwipeStage">
+          <div aria-label="Stos kart" class="fh-cardStack">
+          <div aria-hidden="true" class="fh-swipeCard is-under" id="fhSwipeUnder"></div>
+          <div aria-label="Karta profilu (demo)" class="fh-swipeCard" id="fhSwipeTopCard" role="group">
+          <div aria-hidden="true" class="fh-stamp fh-stamp--no" id="fhStampNo">NO</div>
+          <div aria-hidden="true" class="fh-stamp fh-stamp--yes" id="fhStampYes">YES</div>
+          <div class="fh-swipeHead">
+          <div>
+          <div class="fh-swipeName" id="fhSwipeName">—</div>
+          <div class="fh-swipeMeta" id="fhSwipeMeta">—</div>
+          </div>
+          <span class="fh-badge" id="fhSwipeVerified" style="display:none;">
+          <span aria-hidden="true" class="fh-badgeDot"></span>VERIFIED
+                                    </span>
+          </div>
+          <div class="fh-swipeBio" id="fhSwipeBio">—</div>
+          <div class="fh-swipeFooter">
+          <div class="fh-swipeBtns">
+          <button class="fh-btn fh-btn--ghost" id="fhSwipeNo" type="button">Pomiń</button>
+          <button class="fh-btn fh-btn--primary" id="fhSwipeYes" type="button">Zaproś do współpracy</button>
+          </div>
+          <div class="fh-swipeHint" id="fhSwipeHint">Przeciągnij: lewo/prawo</div>
+          </div>
+          </div>
+          </div>
+          </div>
+          <div class="fh-note">
+                              W produkcie: swipe będzie podpięty do filtrów, preferencji i historii interakcji (bez agresywnej „gamifikacji”).
+                            </div>
+          </div>
+          </div>
+          </div>
+          </section>
+<!-- =========================================================
+         FOR WHO
+         ========================================================= -->
+<section class="fh-section fh-section--alt">
+<div class="fh-wrap">
+<div class="fh-reveal">
+<div class="fh-eyebrow">Dla kogo</div>
+<h2 class="fh-h2">Jedna platforma. Wspólny standard.</h2>
+<p class="fh-sub">
+            Facehub jest dla profesjonalistów i osób budujących profesjonalny profil. Role są jasne — dzięki temu szybciej trafiasz do właściwych ludzi.
+          </p>
+<div class="fh-rule"></div>
+</div>
+<div class="fh-cards3" style="margin-top: 22px;">
+<article class="fh-card fh-reveal">
+<div class="fh-cardTitle">Modelki i modele</div>
+<p class="fh-cardText">Portfolio, typy sesji, dostępność i kontakt w jednym, spójnym profilu.</p>
+</article>
+<article class="fh-card fh-reveal">
+<div class="fh-cardTitle">Fotografowie</div>
+<p class="fh-cardText">Prezentuj styl, szukaj twarzy do projektów i buduj relacje bez spamu.</p>
+</article>
+<article class="fh-card fh-reveal">
+<div class="fh-cardTitle">Wizażyści / wizażystki</div>
+<p class="fh-cardText">Pokaż realizacje, specjalizacje i znajdź współprace, gdzie Twój styl robi różnicę.</p>
+</article>
+<article class="fh-card fh-reveal">
+<div class="fh-cardTitle">Agencje</div>
+<p class="fh-cardText">Scouting z warstwą zaufania i porządek w profilach, zamiast chaosu.</p>
+</article>
+<article class="fh-card fh-reveal">
+<div class="fh-cardTitle">Marki i klienci</div>
+<p class="fh-cardText">Znajdź talent do kampanii, lookbooków i projektów komercyjnych.</p>
+</article>
+<article class="fh-card fh-reveal">
+<div class="fh-cardTitle">Skauci</div>
+<p class="fh-cardText">Odkrywaj nowe twarze szybciej — w środowisku ograniczającym podszywanie się.</p>
+</article>
+</div>
+</div>
+</section>
+<!-- =========================================================
+         EDITORIAL BREAK
+         ========================================================= -->
+
+<section class="fh-section fh-section--alt" id="fh-editorial">
+<div class="fh-wrap">
+<div class="fh-split fh-split--editorial">
+<div class="fh-reveal">
+<div class="fh-eyebrow">Możliwości</div>
+<h2 class="fh-h2">Więcej niż portfolio.</h2>
+<p class="fh-sub">
+          Facehub łączy portfolio, networking i narzędzia do szybkiego doboru ekipy. Treści są „dawkowane” — sekcje przełamujemy układem
+          i podglądami interfejsu, żeby użytkownik nie czuł ściany tekstu.
+        </p>
+<ul aria-label="Kluczowe elementy" class="fh-list">
+<li>Tryb editorial — prace wyglądają jak publikacja.</li>
+<li>Tagowanie ekipy (MUA, stylista) i opisów backstage.</li>
+<li>Weryfikacja kont i ograniczenie podszywania.</li>
+</ul>
+</div>
+<div class="fh-reveal">
+<div aria-label="Podgląd interfejsu (mock)" class="fh-uiMock">
+<div class="fh-uiMock__top">
+<div class="fh-uiMock__brand">facehub</div>
+<div aria-hidden="true" class="fh-uiMock__tabs">
+<span class="fh-uiMock__tab is-active">Editorial</span>
+<span class="fh-uiMock__tab">Grid</span>
+<span class="fh-uiMock__tab">Masonry</span>
+</div>
+<div aria-hidden="true" class="fh-uiMock__chip">Preview</div>
+</div>
+<div aria-hidden="true" class="fh-uiMock__hero"></div>
+<div aria-label="Miniatury (placeholder)" class="fh-uiMock__thumbs">
+<span aria-hidden="true" class="fh-uiMock__thumb fh-uiMock__thumb--1"></span>
+<span aria-hidden="true" class="fh-uiMock__thumb fh-uiMock__thumb--2"></span>
+<span aria-hidden="true" class="fh-uiMock__thumb fh-uiMock__thumb--3"></span>
+<span aria-hidden="true" class="fh-uiMock__thumb fh-uiMock__thumb--4"></span>
+<span aria-hidden="true" class="fh-uiMock__thumb fh-uiMock__thumb--5"></span>
+<span aria-hidden="true" class="fh-uiMock__thumb fh-uiMock__thumb--6"></span>
+</div>
+<div class="fh-uiMock__footer">
+<div class="fh-uiMock__hint">Kliknij profil → podgląd w modalu → zapisz shortlistę.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+
+
+<!-- =========================================================
+         FAQ
+         ========================================================= -->
+<section class="fh-section" id="faq">
+<div class="fh-wrap">
+<div class="fh-reveal">
+<div class="fh-eyebrow">FAQ</div>
+<h2 class="fh-h2">Pytania o bezpieczeństwo, zasady i widoczność.</h2>
+<p class="fh-sub">
+            Odpowiedzi są sformułowane ostrożnie i wiarygodnie — to platforma networkingowa, nie „obietnica zleceń”.
+          </p>
+<div class="fh-rule"></div>
+</div>
+<div class="fh-faq" style="margin-top: 22px;">
+<div class="fh-faqItem fh-reveal">
+<button aria-expanded="false" class="fh-faqBtn" type="button">
+<span class="fh-faqQ">Czy rejestracja jest darmowa?</span>
+<span aria-hidden="true" class="fh-faqIcon">+</span>
+</button>
+<div class="fh-faqPanel" role="region">
+<div class="fh-faqInner">
+                Tak. Podstawowe konto jest darmowe. Opcjonalny abonament ma sens wyłącznie jako zwiększenie limitu zdjęć / możliwości publikacji i ekspozycji portfolio.
+              </div>
+</div>
+</div>
+<div class="fh-faqItem fh-reveal">
+<button aria-expanded="false" class="fh-faqBtn" type="button">
+<span class="fh-faqQ">Jak działa weryfikacja konta?</span>
+<span aria-hidden="true" class="fh-faqIcon">+</span>
+</button>
+<div class="fh-faqPanel" role="region">
+<div class="fh-faqInner">
+                Celem weryfikacji jest potwierdzenie tożsamości i spójności profilu. Szczegóły procesu (np. wideo-selfie, ręczna akceptacja) mogą się różnić w zależności od roli i poziomu ryzyka.
+              </div>
+</div>
+</div>
+<div class="fh-faqItem fh-reveal">
+<button aria-expanded="false" class="fh-faqBtn" type="button">
+<span class="fh-faqQ">Co robicie ze scamami i podszywaniem się?</span>
+<span aria-hidden="true" class="fh-faqIcon">+</span>
+</button>
+<div class="fh-faqPanel" role="region">
+<div class="fh-faqInner">
+                Oznaczenia VERIFIED, zgłoszenia, blokady, ograniczenia widoczności danych kontaktowych oraz moderacja. Projektujemy też UX tak, by utrudniać spam (np. limity działań dla nowych kont).
+              </div>
+</div>
+</div>
+<div class="fh-faqItem fh-reveal">
+<button aria-expanded="false" class="fh-faqBtn" type="button">
+<span class="fh-faqQ">Czy mogę ukryć część portfolio?</span>
+<span aria-hidden="true" class="fh-faqIcon">+</span>
+</button>
+<div class="fh-faqPanel" role="region">
+<div class="fh-faqInner">
+                Docelowo: kontrola prywatności (np. albumy publiczne/ukryte, podgląd tylko dla zaproszonych). Na LP komunikujemy kierunek, a nie finalną implementację.
+              </div>
+</div>
+</div>
+<div class="fh-faqItem fh-reveal">
+<button aria-expanded="false" class="fh-faqBtn" type="button">
+<span class="fh-faqQ">Czy Facehub jest dla całej Polski?</span>
+<span aria-hidden="true" class="fh-faqIcon">+</span>
+</button>
+<div class="fh-faqPanel" role="region">
+<div class="fh-faqInner">
+                Tak. Lokalizacja i filtry mają ułatwiać znalezienie właściwych osób zarówno lokalnie, jak i do projektów wyjazdowych.
+              </div>
+</div>
+</div>
+<div class="fh-faqItem fh-reveal">
+<button aria-expanded="false" class="fh-faqBtn" type="button">
+<span class="fh-faqQ">Kiedy pojawią się swipe i AI matching?</span>
+<span aria-hidden="true" class="fh-faqIcon">+</span>
+</button>
+<div class="fh-faqPanel" role="region">
+<div class="fh-faqInner">
+                To funkcje docelowe po zalogowaniu. AI matching będzie działał jako sugestie oparte o preferencje i estetykę portfolio, bez „obietnic skuteczności” ponad realne możliwości.
+              </div>
+</div>
+</div>
+<div class="fh-faqItem fh-reveal">
+<button aria-expanded="false" class="fh-faqBtn" type="button">
+<span class="fh-faqQ">Czy mogę przeglądać profile bez logowania?</span>
+<span aria-hidden="true" class="fh-faqIcon">+</span>
+</button>
+<div class="fh-faqPanel" role="region">
+<div class="fh-faqInner">
+                Możliwy jest ograniczony podgląd. Pełne dane kontaktowe i część funkcji (np. zaproszenia, wiadomości) powinny być dostępne w bezpiecznym kontekście — zwykle po zalogowaniu i/lub weryfikacji.
+              </div>
+</div>
+</div>
+<div class="fh-faqItem fh-reveal">
+<button aria-expanded="false" class="fh-faqBtn" type="button">
+<span class="fh-faqQ">Jakie treści są niedozwolone?</span>
+<span aria-hidden="true" class="fh-faqIcon">+</span>
+</button>
+<div class="fh-faqPanel" role="region">
+<div class="fh-faqInner">
+                Spam, podszywanie się, próby wyłudzeń, treści naruszające prawa autorskie i zasady społeczności. Zasady będą opisane jasno, a zgłoszenia obsługiwane priorytetowo.
+              </div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- =========================================================
+         FOOTER
+         ========================================================= -->
+<footer class="fh-footer">
+<div class="fh-wrap">
+<div class="fh-footGrid">
+<div>
+            © <span id="fhYear"></span> Facehub. Wszystkie prawa zastrzeżone.
+          </div>
+<div aria-label="Linki stopki (placeholder)" class="fh-footLinks">
+<a href="#">Regulamin</a>
+<a href="#">Polityka prywatności</a>
+<a href="#">Bezpieczeństwo</a>
+<a href="#">Kontakt</a>
+</div>
+</div>
+</div>
+</footer>
+<!-- =========================================================
+         MODAL — Profile preview
+         ========================================================= -->
+<div aria-label="Podgląd profilu" aria-modal="true" class="fh-modalOverlay" id="fhModal" role="dialog">
+<div class="fh-modal">
+<div class="fh-modalLeft">
+<button aria-label="Zamknij" class="fh-modalClose" id="fhModalClose" type="button">✕</button>
+<div aria-label="Zdjęcie profilu" class="fh-modalHero" id="fhModalHero"></div>
+<div class="fh-modalIdentity">
+<h3 class="fh-modalName" id="fhModalName">—</h3>
+<p class="fh-modalRole" id="fhModalRole">—</p>
+<div class="fh-modalBadges" id="fhModalBadges"></div>
+</div>
+<div class="fh-modalActions">
+<button class="fh-btn fh-btn--primary" type="button">Wiadomość</button>
+<button class="fh-btn" type="button">Zaobserwuj</button>
+</div>
+<div class="fh-note" style="margin-top: 12px;">
+            Demo: w produkcie przyciski będą prowadzić do bezpiecznych konwersacji i zaproszeń.
+          </div>
+</div>
+<div class="fh-modalRight">
+<div class="fh-modalSectionTitle">Portfolio (preview)</div>
+<div aria-label="Galeria portfolio" class="fh-gallery" id="fhModalGallery"></div>
+<div class="fh-modalSectionTitle" style="margin-top: 20px;">O mnie</div>
+<p class="fh-modalAbout" id="fhModalAbout">—</p>
+</div>
+</div>
+</div>
+</main>
+<script>
+    (function () {
+      /* =========================================================
+         UTIL
+         ========================================================= */
+      var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      function qs(sel, root) { return (root || document).querySelector(sel); }
+      function qsa(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+
+      function setBodyScrollLocked(locked) {
+        document.body.style.overflow = locked ? "hidden" : "";
+      }
+
+      /* =========================================================
+         YEAR
+         ========================================================= */
+      var yearEl = document.getElementById("fhYear");
+      if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+
+      /* =========================================================
+         SCROLL REVEAL
+         ========================================================= */
+      if (!reduceMotion && "IntersectionObserver" in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) {
+              e.target.classList.add("is-in");
+              io.unobserve(e.target);
+            }
+          });
+        }, { threshold: 0.16 });
+
+        qsa(".fh-reveal").forEach(function (el) { io.observe(el); });
+      } else {
+        qsa(".fh-reveal").forEach(function (el) { el.classList.add("is-in"); });
+      }
+
+      /* =========================================================
+         MOCK DATABASE — with real internet images (picsum seeds)
+         Notes:
+         - picsum.photos is used as stable placeholder imagery.
+         - Replace with your own CDN later.
+         ========================================================= */
+      function img(seed, w, h) {
+        return "https://picsum.photos/seed/" + encodeURIComponent(seed) + "/" + w + "/" + h;
+      }
+
+      var database = [
+        {
+          id: "u1",
+          name: "Oliwia M.",
+          roleLabel: "Modelka",
+          type: "model",
+          city: "Warszawa",
+          verified: true,
+          tags: ["Editorial", "Beauty", "Commercial"],
+          hero: img("fh-olivia-hero", 900, 1200),
+          gallery: [
+            img("fh-olivia-g1", 700, 700),
+            img("fh-olivia-g2", 700, 700),
+            img("fh-olivia-g3", 700, 700),
+            img("fh-olivia-g4", 700, 700),
+            img("fh-olivia-g5", 700, 700),
+            img("fh-olivia-g6", 700, 700)
+          ],
+          about: "Modelka z doświadczeniem w sesjach editorial i komercyjnych. Lubi precyzyjny brief, spokojny plan zdjęciowy i estetykę high fashion. Dostępna w Warszawie i wyjazdowo."
+        },
+        {
+          id: "u2",
+          name: "Jakub K.",
+          roleLabel: "Fotograf",
+          type: "photo",
+          city: "Kraków",
+          verified: true,
+          tags: ["Portrait", "Fashion", "Studio"],
+          hero: img("fh-jakub-hero", 900, 1200),
+          gallery: [
+            img("fh-jakub-g1", 700, 700),
+            img("fh-jakub-g2", 700, 700),
+            img("fh-jakub-g3", 700, 700),
+            img("fh-jakub-g4", 700, 700),
+            img("fh-jakub-g5", 700, 700),
+            img("fh-jakub-g6", 700, 700)
+          ],
+          about: "Fotograf portretowy i modowy. Pracuje w studiu i w plenerze, w estetyce minimalistycznej, z naciskiem na światło i detal. Preferuje współprace z jasnym celem i moodboardem."
+        },
+        {
+          id: "u3",
+          name: "Sara V.",
+          roleLabel: "Wizażystka",
+          type: "mua",
+          city: "Gdańsk",
+          verified: false,
+          tags: ["Glow", "Bridal", "Beauty"],
+          hero: img("fh-sara-hero", 900, 1200),
+          gallery: [
+            img("fh-sara-g1", 700, 700),
+            img("fh-sara-g2", 700, 700),
+            img("fh-sara-g3", 700, 700),
+            img("fh-sara-g4", 700, 700),
+            img("fh-sara-g5", 700, 700),
+            img("fh-sara-g6", 700, 700)
+          ],
+          about: "Wizażystka beauty, glow i bridal. Stawia na higienę pracy, czystość narzędzi i trwałość makijażu. Otwartość na TFP w projektach editorial, komercyjnie — z briefem i harmonogramem."
+        },
+        {
+          id: "u4",
+          name: "Studio 44",
+          roleLabel: "Agencja",
+          type: "agency",
+          city: "Wrocław",
+          verified: true,
+          tags: ["New faces", "Casting", "Commercial"],
+          hero: img("fh-studio44-hero", 900, 1200),
+          gallery: [
+            img("fh-studio44-g1", 700, 700),
+            img("fh-studio44-g2", 700, 700),
+            img("fh-studio44-g3", 700, 700),
+            img("fh-studio44-g4", 700, 700),
+            img("fh-studio44-g5", 700, 700),
+            img("fh-studio44-g6", 700, 700)
+          ],
+          about: "Agencja i scouting: selekcja profili, standard weryfikacji i jasna komunikacja zasad współprac. Zależy nam na bezpiecznym ekosystemie dla modeli i klientów."
+        },
+        {
+          id: "u5",
+          name: "Lena R.",
+          roleLabel: "Modelka",
+          type: "model",
+          city: "Poznań",
+          verified: true,
+          tags: ["High fashion", "Runway", "Editorial"],
+          hero: img("fh-lena-hero", 900, 1200),
+          gallery: [
+            img("fh-lena-g1", 700, 700),
+            img("fh-lena-g2", 700, 700),
+            img("fh-lena-g3", 700, 700),
+            img("fh-lena-g4", 700, 700),
+            img("fh-lena-g5", 700, 700),
+            img("fh-lena-g6", 700, 700)
+          ],
+          about: "Modelka z mocnym ruchem scenicznym i doświadczeniem w editorial. Minimalizm, forma, konsekwentna estetyka. Chętnie pracuje z fotografami, którzy lubią detal i ciszę w kadrze."
+        },
+        {
+          id: "u6",
+          name: "Piotr W.",
+          roleLabel: "Fotograf",
+          type: "photo",
+          city: "Warszawa",
+          verified: false,
+          tags: ["Street", "Portrait", "Natural light"],
+          hero: img("fh-piotr-hero", 900, 1200),
+          gallery: [
+            img("fh-piotr-g1", 700, 700),
+            img("fh-piotr-g2", 700, 700),
+            img("fh-piotr-g3", 700, 700),
+            img("fh-piotr-g4", 700, 700),
+            img("fh-piotr-g5", 700, 700),
+            img("fh-piotr-g6", 700, 700)
+          ],
+          about: "Fotograf portretowy w naturalnym świetle. Preferuje krótkie, konkretne sesje, dobrze przygotowany moodboard i dbałość o selekcję kadrów. Otwarty na projekty testowe."
+        },
+        {
+          id: "u7",
+          name: "Maja S.",
+          roleLabel: "Modelka",
+          type: "model",
+          city: "Łódź",
+          verified: true,
+          tags: ["Beauty", "Commercial", "E-comm"],
+          hero: img("fh-maja-hero", 900, 1200),
+          gallery: [
+            img("fh-maja-g1", 700, 700),
+            img("fh-maja-g2", 700, 700),
+            img("fh-maja-g3", 700, 700),
+            img("fh-maja-g4", 700, 700),
+            img("fh-maja-g5", 700, 700),
+            img("fh-maja-g6", 700, 700)
+          ],
+          about: "Modelka do beauty i commercial. Dobra praca z briefem produktowym, e-commerce i kampaniami. Ceni jasne zasady wykorzystania wizerunku."
+        },
+        {
+          id: "u8",
+          name: "Nina P.",
+          roleLabel: "Wizażystka",
+          type: "mua",
+          city: "Kraków",
+          verified: true,
+          tags: ["Editorial", "Skin", "Backstage"],
+          hero: img("fh-nina-hero", 900, 1200),
+          gallery: [
+            img("fh-nina-g1", 700, 700),
+            img("fh-nina-g2", 700, 700),
+            img("fh-nina-g3", 700, 700),
+            img("fh-nina-g4", 700, 700),
+            img("fh-nina-g5", 700, 700),
+            img("fh-nina-g6", 700, 700)
+          ],
+          about: "Wizażystka editorial/backstage, z naciskiem na skórę i teksturę. Pracuje szybko i czysto, lubi zespoły z precyzyjną wizją."
+        },
+        {
+          id: "u9",
+          name: "Atelier North",
+          roleLabel: "Agencja",
+          type: "agency",
+          city: "Warszawa",
+          verified: false,
+          tags: ["Casting", "Brand", "Production"],
+          hero: img("fh-atelier-hero", 900, 1200),
+          gallery: [
+            img("fh-atelier-g1", 700, 700),
+            img("fh-atelier-g2", 700, 700),
+            img("fh-atelier-g3", 700, 700),
+            img("fh-atelier-g4", 700, 700),
+            img("fh-atelier-g5", 700, 700),
+            img("fh-atelier-g6", 700, 700)
+          ],
+          about: "Agencja produkcyjna. Szukamy talentów do kampanii i lookbooków. Doceniamy transparentne portfolio i szybki kontakt w bezpiecznym kanale."
+        }
+      ];
+
+      /* =========================================================
+         SEARCH — live filter with states (loading/empty)
+         ========================================================= */
+      var searchInput = document.getElementById("fhSearchInput");
+      var searchBtn = document.getElementById("fhSearchBtn");
+      var resultsEl = document.getElementById("fhResults");
+      var filterButtons = qsa("[data-fh-filter]");
+      var activeFilter = "all";
+      var typingTimer = null;
+
+      function setFilter(filter) {
+        activeFilter = filter;
+        filterButtons.forEach(function (b) {
+          var isActive = b.getAttribute("data-fh-filter") === filter;
+          b.classList.toggle("is-active", isActive);
+        });
+      }
+
+      function matchesFilter(item) {
+        if (activeFilter === "all") return true;
+        if (activeFilter === "verified") return !!item.verified;
+        return item.type === activeFilter;
+      }
+
+      function matchesQuery(item, q) {
+        if (!q) return true;
+        var hay = [
+          item.name,
+          item.roleLabel,
+          item.city,
+          (item.tags || []).join(" ")
+        ].join(" ").toLowerCase();
+        return hay.indexOf(q) !== -1;
+      }
+
+      function renderState(text) {
+        resultsEl.innerHTML = '<div class="fh-state">' + text + '</div>';
+      }
+
+      function renderResults(query) {
+        var q = (query || "").trim().toLowerCase();
+
+        var filtered = database.filter(function (item) {
+          return matchesFilter(item) && matchesQuery(item, q);
+        });
+
+        if (filtered.length === 0) {
+          renderState("Brak wyników. Spróbuj innego słowa lub zmień filtr.");
+          return;
+        }
+
+        resultsEl.innerHTML = "";
+        filtered.slice(0, 8).forEach(function (item) {
+          var card = document.createElement("div");
+          card.className = "fh-resultCard";
+          card.setAttribute("role", "button");
+          card.setAttribute("tabindex", "0");
+          card.setAttribute("aria-label", "Otwórz profil: " + item.name);
+
+          var badge = item.verified
+            ? '<span class="fh-badge"><span class="fh-badgeDot" aria-hidden="true"></span>Verified</span>'
+            : '';
+
+          card.innerHTML =
+            '<div class="fh-avatar" style="background-image:url(\'' + item.hero + '\')"></div>' +
+            '<div class="fh-resMain">' +
+              '<div class="fh-resName">' + item.name + '</div>' +
+              '<div class="fh-resMeta">' + item.roleLabel + ' • ' + item.city + ' • ' + (item.tags[0] || "Portfolio") + '</div>' +
+            '</div>' +
+            '<div>' + badge + '</div>';
+
+          card.addEventListener("click", function () { openModal(item); });
+          card.addEventListener("keydown", function (e) {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              openModal(item);
+            }
+          });
+
+          resultsEl.appendChild(card);
+        });
+      }
+
+      function simulateLoadingThenRender() {
+        if (!resultsEl) return;
+        renderState("Wyszukiwanie…");
+        window.setTimeout(function () {
+          renderResults(searchInput ? searchInput.value : "");
+        }, 140);
+      }
+
+      filterButtons.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          setFilter(btn.getAttribute("data-fh-filter"));
+          simulateLoadingThenRender();
+        });
+      });
+
+      if (searchInput) {
+        searchInput.addEventListener("input", function () {
+          window.clearTimeout(typingTimer);
+          typingTimer = window.setTimeout(simulateLoadingThenRender, 120);
+        });
+      }
+
+      if (searchBtn) {
+        searchBtn.addEventListener("click", simulateLoadingThenRender);
+      }
+
+      // Initial render
+      renderResults("");
+
+      /* =========================================================
+         MODAL
+         ========================================================= */
+      var modalOverlay = document.getElementById("fhModal");
+      var modalClose = document.getElementById("fhModalClose");
+      var modalHero = document.getElementById("fhModalHero");
+      var modalName = document.getElementById("fhModalName");
+      var modalRole = document.getElementById("fhModalRole");
+      var modalBadges = document.getElementById("fhModalBadges");
+      var modalGallery = document.getElementById("fhModalGallery");
+      var modalAbout = document.getElementById("fhModalAbout");
+
+      var lastFocusedEl = null;
+
+      function openModal(user) {
+        if (!modalOverlay) return;
+
+        lastFocusedEl = document.activeElement;
+
+        if (modalHero) modalHero.style.backgroundImage = "url('" + user.hero + "')";
+        if (modalName) modalName.textContent = user.name;
+        if (modalRole) modalRole.textContent = user.roleLabel + " • " + user.city;
+
+        if (modalBadges) {
+          var html = "";
+          if (user.verified) html += '<span class="fh-pill is-verified">Verified</span>';
+          html += '<span class="fh-pill">' + user.type.toUpperCase() + '</span>';
+          (user.tags || []).slice(0, 3).forEach(function (t) {
+            html += '<span class="fh-pill">' + t + '</span>';
+          });
+          modalBadges.innerHTML = html;
+        }
+
+        if (modalGallery) {
+          modalGallery.innerHTML = "";
+          (user.gallery || []).slice(0, 6).forEach(function (url) {
+            var item = document.createElement("div");
+            item.className = "fh-galleryItem";
+            item.style.backgroundImage = "url('" + url + "')";
+            item.setAttribute("role", "img");
+            item.setAttribute("aria-label", "Portfolio");
+            modalGallery.appendChild(item);
+          });
+        }
+
+        if (modalAbout) modalAbout.textContent = user.about || "—";
+
+        modalOverlay.classList.add("is-open");
+        setBodyScrollLocked(true);
+
+        // Focus close button for accessibility
+        window.setTimeout(function () {
+          if (modalClose) modalClose.focus();
+        }, 0);
+      }
+
+      function closeModal() {
+        if (!modalOverlay) return;
+        modalOverlay.classList.remove("is-open");
+        setBodyScrollLocked(false);
+
+        // restore focus
+        window.setTimeout(function () {
+          if (lastFocusedEl && typeof lastFocusedEl.focus === "function") lastFocusedEl.focus();
+        }, 0);
+      }
+
+      if (modalClose) modalClose.addEventListener("click", closeModal);
+
+      if (modalOverlay) {
+        modalOverlay.addEventListener("click", function (e) {
+          if (e.target === modalOverlay) closeModal();
+        });
+      }
+
+      window.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && modalOverlay && modalOverlay.classList.contains("is-open")) {
+          closeModal();
+        }
+      });
+
+      /* =========================================================
+         SWIPE DEMO (interactive)
+         ========================================================= */
+      var swipeIdx = 0;
+      var swipeCard = document.getElementById("fhSwipeCard");
+      var swipeImg = document.getElementById("fhSwipeImg");
+      var swipeName = document.getElementById("fhSwipeName");
+      var swipeMeta = document.getElementById("fhSwipeMeta");
+      var swipeBadge = document.getElementById("fhSwipeBadge");
+      var swipeBlurb = document.getElementById("fhSwipeBlurb");
+      var skipBtn = document.getElementById("fhSkipBtn");
+      var inviteBtn = document.getElementById("fhInviteBtn");
+      var openFromSwipeBtn = document.getElementById("fhOpenFromSwipeBtn");
+
+      // Swipe uses a curated subset for narrative
+      var swipePool = [
+        database[0],
+        database[1],
+        database[4],
+        database[7],
+        database[2]
+      ].filter(Boolean);
+
+      function renderSwipe() {
+        var p = swipePool[swipeIdx % swipePool.length];
+        if (!p) return;
+
+        if (swipeImg) swipeImg.style.backgroundImage = "url('" + p.hero + "')";
+        if (swipeName) swipeName.textContent = p.name + " • " + (p.tags[0] || "Editorial");
+        if (swipeMeta) swipeMeta.textContent = p.roleLabel + " • " + p.city + " • " + (p.tags.slice(0, 2).join(" / ") || "Portfolio");
+        if (swipeBadge) swipeBadge.style.display = p.verified ? "inline-flex" : "none";
+        if (swipeBlurb) {
+          swipeBlurb.textContent =
+            "Teaser: szybki podgląd + zaproszenie do współpracy. Docelowo: dopasowania na podstawie preferencji i estetyki.";
+        }
+
+        // Hook for opening modal from swipe
+        if (openFromSwipeBtn) {
+          openFromSwipeBtn.onclick = function () { openModal(p); };
+        }
+      }
+
+      function nextSwipe() {
+        swipeIdx += 1;
+
+        if (!swipeCard || reduceMotion) {
+          renderSwipe();
+          return;
+        }
+
+        swipeCard.style.transition = "transform 180ms var(--fh-ease), opacity 180ms var(--fh-ease)";
+        swipeCard.style.transform = "translateY(8px) scale(0.985)";
+        swipeCard.style.opacity = "0.70";
+
+        window.setTimeout(function () {
+          renderSwipe();
+          swipeCard.style.transform = "translateY(0) scale(1)";
+          swipeCard.style.opacity = "1";
+        }, 190);
+      }
+
+      if (skipBtn) skipBtn.addEventListener("click", nextSwipe);
+      if (inviteBtn) inviteBtn.addEventListener("click", nextSwipe);
+
+      renderSwipe();
+
+      /* =========================================================
+         FAQ — smooth height animation
+         ========================================================= */
+      var faqItems = qsa(".fh-faqItem");
+
+      function closeAllFaq(exceptItem) {
+        faqItems.forEach(function (item) {
+          if (exceptItem && item === exceptItem) return;
+          setFaqOpen(item, false);
+        });
+      }
+
+      function setFaqOpen(item, open) {
+        if (!item) return;
+
+        var btn = qs(".fh-faqBtn", item);
+        var panel = qs(".fh-faqPanel", item);
+
+        if (!btn || !panel) return;
+
+        var isOpen = item.classList.contains("is-open");
+        if (open === isOpen) return;
+
+        btn.setAttribute("aria-expanded", open ? "true" : "false");
+        item.classList.toggle("is-open", open);
+
+        if (reduceMotion) {
+          panel.style.height = open ? "auto" : "0px";
+          return;
+        }
+
+        // If opening: measure content height then animate
+        if (open) {
+          panel.style.height = "auto";
+          var full = panel.scrollHeight;
+          panel.style.height = "0px";
+          panel.offsetHeight;
+          panel.style.height = full + "px";
+
+          // After transition: set to auto for responsive content
+          window.setTimeout(function () {
+            if (item.classList.contains("is-open")) panel.style.height = "auto";
+          }, 340);
+        } else {
+          // closing: from current height (auto -> px), then to 0
+          var current = panel.scrollHeight;
+          panel.style.height = current + "px";
+          panel.offsetHeight;
+          panel.style.height = "0px";
+        }
+      }
+
+      faqItems.forEach(function (item) {
+        var btn = qs(".fh-faqBtn", item);
+        if (!btn) return;
+
+        btn.addEventListener("click", function () {
+          var willOpen = !item.classList.contains("is-open");
+          closeAllFaq(item);
+          setFaqOpen(item, willOpen);
+        });
+      });
+
+      /* =========================================================
+         CTA buttons (placeholders)
+         ========================================================= */
+      qsa("[data-fh-action='signup']").forEach(function (el) {
+        el.addEventListener("click", function () {
+          alert("Demo CTA: docelowo przekierowanie do rejestracji.");
+        });
+      });
+      qsa("[data-fh-action='login']").forEach(function (el) {
+        el.addEventListener("click", function () {
+          alert("Demo CTA: docelowo przekierowanie do logowania.");
+        });
+      });
+    })();
+  </script>
+<script>
+    (function () {
+      "use strict";
+    
+      var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    
+      function qs(sel, parent) { return (parent || document).querySelector(sel); }
+      function clamp(n, min, max) { return Math.max(min, Math.min(max, n)); }
+    
+      /* =========================================================
+         DATA — from lp_final.html (picsum seeds placeholders)
+         ========================================================= */
+      function img(seed, w, h) {
+        return "https://picsum.photos/seed/" + encodeURIComponent(seed) + "/" + w + "/" + h;
+      }
+    
+      var database = [
+        {
+          id: "u1",
+          name: "Oliwia M.",
+          roleLabel: "Modelka",
+          type: "model",
+          city: "Warszawa",
+          verified: true,
+          tags: ["Editorial", "Beauty", "Commercial"],
+          hero: img("fh-olivia-hero", 900, 1200),
+          gallery: [
+            img("fh-olivia-g1", 700, 700), img("fh-olivia-g2", 700, 700), img("fh-olivia-g3", 700, 700),
+            img("fh-olivia-g4", 700, 700), img("fh-olivia-g5", 700, 700), img("fh-olivia-g6", 700, 700)
+          ],
+          about: "Modelka z doświadczeniem w sesjach editorial i komercyjnych. Lubi precyzyjny brief, spokojny plan zdjęciowy i estetykę high fashion. Dostępna w Warszawie i wyjazdowo."
+        },
+        {
+          id: "u2",
+          name: "Jakub K.",
+          roleLabel: "Fotograf",
+          type: "photo",
+          city: "Kraków",
+          verified: true,
+          tags: ["Portrait", "Fashion", "Studio"],
+          hero: img("fh-jakub-hero", 900, 1200),
+          gallery: [
+            img("fh-jakub-g1", 700, 700), img("fh-jakub-g2", 700, 700), img("fh-jakub-g3", 700, 700),
+            img("fh-jakub-g4", 700, 700), img("fh-jakub-g5", 700, 700), img("fh-jakub-g6", 700, 700)
+          ],
+          about: "Fotograf portretowy i modowy. Pracuje w studiu i w plenerze, w estetyce minimalistycznej, z naciskiem na światło i detal. Preferuje współprace z jasnym celem i moodboardem."
+        },
+        {
+          id: "u3",
+          name: "Sara V.",
+          roleLabel: "Wizażystka",
+          type: "mua",
+          city: "Gdańsk",
+          verified: false,
+          tags: ["Glow", "Bridal", "Beauty"],
+          hero: img("fh-sara-hero", 900, 1200),
+          gallery: [
+            img("fh-sara-g1", 700, 700), img("fh-sara-g2", 700, 700), img("fh-sara-g3", 700, 700),
+            img("fh-sara-g4", 700, 700), img("fh-sara-g5", 700, 700), img("fh-sara-g6", 700, 700)
+          ],
+          about: "Wizażystka beauty, glow i bridal. Stawia na higienę pracy, czystość narzędzi i trwałość makijażu. Otwartość na TFP w projektach editorial, komercyjnie — z briefem i harmonogramem."
+        },
+        {
+          id: "u4",
+          name: "Studio 44",
+          roleLabel: "Agencja",
+          type: "agency",
+          city: "Wrocław",
+          verified: true,
+          tags: ["New faces", "Casting", "Commercial"],
+          hero: img("fh-studio44-hero", 900, 1200),
+          gallery: [
+            img("fh-studio44-g1", 700, 700), img("fh-studio44-g2", 700, 700), img("fh-studio44-g3", 700, 700),
+            img("fh-studio44-g4", 700, 700), img("fh-studio44-g5", 700, 700), img("fh-studio44-g6", 700, 700)
+          ],
+          about: "Agencja i scouting: selekcja profili, standard weryfikacji i jasna komunikacja zasad współprac. Zależy nam na bezpiecznym ekosystemie dla modeli i klientów."
+        },
+        {
+          id: "u5",
+          name: "Lena R.",
+          roleLabel: "Modelka",
+          type: "model",
+          city: "Poznań",
+          verified: true,
+          tags: ["High fashion", "Runway", "Editorial"],
+          hero: img("fh-lena-hero", 900, 1200),
+          gallery: [
+            img("fh-lena-g1", 700, 700), img("fh-lena-g2", 700, 700), img("fh-lena-g3", 700, 700),
+            img("fh-lena-g4", 700, 700), img("fh-lena-g5", 700, 700), img("fh-lena-g6", 700, 700)
+          ],
+          about: "Modelka z mocnym ruchem scenicznym i doświadczeniem w editorial. Minimalizm, forma, konsekwentna estetyka. Chętnie pracuje z fotografami, którzy lubią detal i ciszę w kadrze."
+        },
+        {
+          id: "u8",
+          name: "Nina P.",
+          roleLabel: "Wizażystka",
+          type: "mua",
+          city: "Kraków",
+          verified: true,
+          tags: ["Editorial", "Skin", "Backstage"],
+          hero: img("fh-nina-hero", 900, 1200),
+          gallery: [
+            img("fh-nina-g1", 700, 700), img("fh-nina-g2", 700, 700), img("fh-nina-g3", 700, 700),
+            img("fh-nina-g4", 700, 700), img("fh-nina-g5", 700, 700), img("fh-nina-g6", 700, 700)
+          ],
+          about: "Wizażystka editorial/backstage, z naciskiem na skórę i teksturę. Pracuje szybko i czysto, lubi zespoły z precyzyjną wizją."
+        }
+      ];
+    
+      /* =========================================================
+         SWIPE — keep your logic + swap data source
+         ========================================================= */
+      var swipeIdx = 0;
+    
+      var swipeTop = qs("#fhSwipeTopCard");
+      var swipeUnder = qs("#fhSwipeUnder");
+      var swipeName = qs("#fhSwipeName");
+      var swipeMeta = qs("#fhSwipeMeta");
+      var swipeBio = qs("#fhSwipeBio");
+      var swipeVerified = qs("#fhSwipeVerified");
+      var swipeNoBtn = qs("#fhSwipeNo");
+      var swipeYesBtn = qs("#fhSwipeYes");
+      var stampNo = qs("#fhStampNo");
+      var stampYes = qs("#fhStampYes");
+    
+      // curated subset like in lp_final narrative
+      var swipePool = [
+        database[0],
+        database[1],
+        database[4],
+        database[5],
+        database[2],
+        database[3]
+      ].filter(Boolean);
+    
+      function setCardVisual(cardEl, profile) {
+        if (!cardEl || !profile) return;
+        var url = profile.hero || "";
+        // CSS ::before uses --fh-swipe-hero
+        cardEl.style.setProperty("--fh-swipe-hero", url ? "url('" + url + "')" : "none");
+      }
+    
+      function renderSwipeCards() {
+        if (!swipePool.length) return;
+    
+        var top = swipePool[swipeIdx % swipePool.length];
+        var under = swipePool[(swipeIdx + 1) % swipePool.length];
+    
+        if (swipeName) swipeName.textContent = top.name + (top.tags && top.tags[0] ? " • " + top.tags[0] : "");
+        if (swipeMeta) {
+          var tags = (top.tags || []).slice(0, 2).join(" / ");
+          swipeMeta.textContent = (top.roleLabel || "Profil") + " • " + (top.city || "Polska") + (tags ? " • " + tags : "");
+        }
+        if (swipeBio) {
+          // bierzemy „about” z lp_final jako opis w karcie
+          swipeBio.textContent = top.about || "—";
+        }
+        if (swipeVerified) swipeVerified.style.display = top.verified ? "inline-flex" : "none";
+    
+        setCardVisual(swipeTop, top);
+        setCardVisual(swipeUnder, under);
+    
+        if (stampNo) stampNo.style.opacity = "0";
+        if (stampYes) stampYes.style.opacity = "0";
+      }
+    
+      function animateSwipe(direction) {
+        if (!swipeTop) return;
+    
+        var distX = direction === "yes" ? 520 : -520;
+        var rot = direction === "yes" ? 10 : -10;
+    
+        if (!reduceMotion) {
+          swipeTop.style.transition = "transform 260ms var(--fh-ease), opacity 260ms var(--fh-ease)";
+          swipeTop.style.transform = "translateX(" + distX + "px) rotate(" + rot + "deg)";
+          swipeTop.style.opacity = "0";
+        }
+    
+        window.setTimeout(function () {
+          swipeTop.style.transition = "";
+          swipeTop.style.transform = "";
+          swipeTop.style.opacity = "";
+    
+          swipeIdx += 1;
+          renderSwipeCards();
+        }, reduceMotion ? 0 : 280);
+      }
+    
+      if (swipeNoBtn) swipeNoBtn.addEventListener("click", function () { animateSwipe("no"); });
+      if (swipeYesBtn) swipeYesBtn.addEventListener("click", function () { animateSwipe("yes"); });
+    
+      var drag = { isDown: false, startX: 0, curX: 0 };
+    
+      function setStamp(x) {
+        if (!stampNo || !stampYes) return;
+        var abs = Math.abs(x);
+        var op = clamp(abs / 120, 0, 1);
+        if (x < 0) {
+          stampNo.style.opacity = String(op);
+          stampYes.style.opacity = "0";
+        } else {
+          stampYes.style.opacity = String(op);
+          stampNo.style.opacity = "0";
+        }
+      }
+    
+      function onPointerDown(e) {
+        if (!swipeTop) return;
+        drag.isDown = true;
+        drag.startX = e.clientX || (e.touches && e.touches[0] && e.touches[0].clientX) || 0;
+        drag.curX = drag.startX;
+        swipeTop.style.transition = reduceMotion ? "" : "transform 0ms";
+      }
+    
+      function onPointerMove(e) {
+        if (!drag.isDown || !swipeTop) return;
+        drag.curX = e.clientX || (e.touches && e.touches[0] && e.touches[0].clientX) || drag.curX;
+        var dx = drag.curX - drag.startX;
+    
+        if (!reduceMotion) {
+          var rot = clamp(dx / 26, -12, 12);
+          swipeTop.style.transform = "translateX(" + dx + "px) rotate(" + rot + "deg)";
+        }
+    
+        setStamp(dx);
+      }
+    
+      function onPointerUp() {
+        if (!drag.isDown || !swipeTop) return;
+        drag.isDown = false;
+    
+        var dx = drag.curX - drag.startX;
+        var threshold = 110;
+    
+        if (Math.abs(dx) > threshold) {
+          animateSwipe(dx > 0 ? "yes" : "no");
+          return;
+        }
+    
+        if (!reduceMotion) {
+          swipeTop.style.transition = "transform 220ms var(--fh-ease)";
+          swipeTop.style.transform = "";
+        }
+        if (stampNo) stampNo.style.opacity = "0";
+        if (stampYes) stampYes.style.opacity = "0";
+      }
+    
+      if (swipeTop) {
+        swipeTop.addEventListener("pointerdown", onPointerDown);
+        window.addEventListener("pointermove", onPointerMove);
+        window.addEventListener("pointerup", onPointerUp);
+    
+        swipeTop.addEventListener("touchstart", onPointerDown, { passive: true });
+        window.addEventListener("touchmove", onPointerMove, { passive: true });
+        window.addEventListener("touchend", onPointerUp);
+      }
+    
+      renderSwipeCards();
+    })();
+    </script>
+<!-- =========================================================
+       Instrukcja edycji (najważniejsze miejsca)
+       =========================================================
+    1) Kolory / styl:
+       - Szukaj w CSS: ".fh { --fh-bg: ...; --fh-accent: ...; }"
+       - Najmocniej wpływa: --fh-bg, --fh-ink, --fh-muted, --fh-hairline, --fh-accent.
+
+    2) Fonty:
+       - Headline: --fh-serif
+       - Tekst: --fh-sans
+       - Możesz podmienić fonty w linku Google Fonts i w zmiennych.
+
+    3) Teksty i CTA:
+       - Hero H1 i lead: sekcja <section class="fh-hero"> (edytuj tekst bezpośrednio w HTML).
+       - Przyciski CTA: elementy z atrybutem data-fh-action="signup" / "login".
+       - Alerty demo CTA: na końcu <script> (wyszukaj "Demo CTA").
+
+    4) Profile + zdjęcia:
+       - W JS: tablica "database" (mock profile).
+       - Zdjęcia: funkcja img(seed,w,h) używa picsum.photos.
+         Podmień user.hero i user.gallery na własne URL (np. CDN / S3).
+
+    5) Wyszukiwarka:
+       - Logika: funkcje renderResults(), matchesFilter(), matchesQuery().
+       - Liczba wyników: "filtered.slice(0, 8)".
+
+    6) Modal:
+       - HTML: <div id="fhModal"> ...
+       - JS: openModal(user) i closeModal().
+
+    7) FAQ animacje:
+       - JS: setFaqOpen() — animuje wysokość panelu.
+       - CSS: .fh-faqPanel { transition: height ... }
+
+    8) Scroll-reveal:
+       - Elementy z klasą .fh-reveal
+       - JS: IntersectionObserver (wyłączany przy prefers-reduced-motion).
+  -->
+
+<script>
+  (function() {
+    function ready(fn) {
+      if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", fn);
+      else fn();
+    }
+
+    ready(function() {
+      var demo = document.getElementById("fhGridDemo");
+      if (!demo) return;
+
+      var buttons = document.querySelectorAll("[data-fh-grid-toggle]");
+      if (!buttons || !buttons.length) return;
+
+      function setMode(mode) {
+        demo.classList.remove("is-editorial", "is-grid", "is-masonry");
+        if (mode === "grid") demo.classList.add("is-grid");
+        else if (mode === "masonry") demo.classList.add("is-masonry");
+        else demo.classList.add("is-editorial");
+
+        buttons.forEach(function(btn) {
+          var isActive = btn.getAttribute("data-fh-grid-toggle") === mode;
+          btn.classList.toggle("is-active", isActive);
+          btn.setAttribute("aria-pressed", isActive ? "true" : "false");
+        });
+      }
+
+      buttons.forEach(function(btn) {
+        btn.addEventListener("click", function() {
+          var mode = btn.getAttribute("data-fh-grid-toggle") || "editorial";
+          setMode(mode);
+        });
+      });
+
+      // init
+      setMode("editorial");
+    });
+  })();
+</script>
+
+</body>
+</html>
